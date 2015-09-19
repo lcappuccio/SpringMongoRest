@@ -1,6 +1,7 @@
 package org.systemexception.springmongorest.application;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,6 +13,7 @@ import java.util.Arrays;
  * @date 19/09/15 11:56
  */
 @ComponentScan({"org.systemexception.springmongorest"})
+@EnableAutoConfiguration
 @SpringBootApplication
 public class Application {
 
