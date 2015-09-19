@@ -3,6 +3,7 @@ package org.systemexception.springmongorest.services;
 import org.systemexception.springmongorest.model.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author leo
@@ -32,7 +33,7 @@ public interface PersonService {
 	 * @param id
 	 * @return
 	 */
-	Person findById(String id);
+	Optional<Person> findById(String id);
 
 	/**
 	 * @param person

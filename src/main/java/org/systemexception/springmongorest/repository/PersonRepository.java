@@ -4,6 +4,7 @@ import org.springframework.data.repository.Repository;
 import org.systemexception.springmongorest.model.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author leo
@@ -30,6 +31,6 @@ public interface PersonRepository extends Repository<Person, String> {
 	 * @param id
 	 * @return
 	 */
-	Person findOne(String id);
+	Optional<Person> findOne(String id);
 
 }

@@ -6,6 +6,7 @@ import org.systemexception.springmongorest.model.Person;
 import org.systemexception.springmongorest.repository.PersonRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author leo
@@ -52,7 +53,7 @@ public class MongoPersonService implements PersonService {
 	 * @return
 	 */
 	@Override
-	public Person findById(String id) {
+	public Optional<Person> findById(String id) {
 		return personRepository.findOne(id);
 	}
 
@@ -62,7 +63,7 @@ public class MongoPersonService implements PersonService {
 	 */
 	@Override
 	public void update(Person person) {
-		Person foundPerson = personRepository.findOne(person.getId());
+		Person foundPerson = personRepository.findOne(person.getId()).get();
 		foundPerson.setName(person.getName());
 		foundPerson.setLastName(person.getLastName());
 		personRepository.save(foundPerson);
