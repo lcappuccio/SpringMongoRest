@@ -14,9 +14,14 @@ public class Person {
 	private final static Logger logger = LoggerImpl.getFor(Person.class);
 	public static final int MAX_LENGTH = 50;
 
+
 	@Id
 	private String id;
 	private String name, lastName;
+
+	public String getId() {
+		return id;
+	}
 
 	public String getName() {
 		return name;

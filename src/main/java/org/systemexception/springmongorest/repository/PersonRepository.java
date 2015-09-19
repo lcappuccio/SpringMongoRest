@@ -4,7 +4,6 @@ import org.springframework.data.repository.Repository;
 import org.systemexception.springmongorest.model.Person;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author leo
@@ -15,7 +14,7 @@ public interface PersonRepository extends Repository<Person, String> {
 	/**
 	 * @param person
 	 */
-	void save(Person person);
+	Person save(Person person);
 
 	/**
 	 * @param person
@@ -31,6 +30,6 @@ public interface PersonRepository extends Repository<Person, String> {
 	 * @param id
 	 * @return
 	 */
-	Optional<Person> findOne(String id);
+	Person findOne(String id);
 
 }
