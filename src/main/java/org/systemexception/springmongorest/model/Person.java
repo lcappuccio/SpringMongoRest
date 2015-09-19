@@ -34,6 +34,11 @@ public class Person {
 		this.lastName = lastName;
 	}
 
+	/**
+	 * @param name
+	 * @param lastName
+	 * @throws PersonException if names don't fullfill requirements
+	 */
 	public Person(final String name, final String lastName) throws PersonException {
 		if (name == null || lastName == null) {
 			throw new PersonException("Null names not allowed");
@@ -44,7 +49,7 @@ public class Person {
 	}
 
 	private String checkStringLength(final String stringToCheck) {
-		String stringValidated = new String();
+		String stringValidated = "";
 		if (stringToCheck.length() > MAX_LENGTH) {
 			stringValidated = stringToCheck.substring(0, MAX_LENGTH);
 			logger.info("Name " + stringToCheck + " truncated to: " + stringValidated);

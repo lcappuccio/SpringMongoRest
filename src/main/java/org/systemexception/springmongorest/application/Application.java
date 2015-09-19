@@ -17,6 +17,9 @@ import java.util.Arrays;
 @SpringBootApplication
 public class Application {
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		ApplicationContext applicationContext = SpringApplication.run(Application.class, args);

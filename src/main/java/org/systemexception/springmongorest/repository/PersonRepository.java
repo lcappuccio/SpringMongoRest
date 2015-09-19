@@ -12,12 +12,25 @@ import java.util.Optional;
  */
 public interface PersonRepository extends Repository<Person, String> {
 
+	/**
+	 * @param person
+	 */
 	void add(Person person);
 
+	/**
+	 * @param person
+	 */
 	void delete(Person person);
 
+	/**
+	 * @return
+	 */
 	List<Person> findAll();
 
+	/**
+	 * @param id
+	 * @return
+	 */
 	Optional<Person> findById(String id);
 
 }

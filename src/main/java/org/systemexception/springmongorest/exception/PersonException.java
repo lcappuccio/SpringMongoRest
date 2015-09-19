@@ -6,6 +6,9 @@ package org.systemexception.springmongorest.exception;
  */
 public class PersonException extends Exception {
 
+	/**
+	 * @param message the exception message
+	 */
 	public PersonException(String message) {
 		super(message);
 	}
