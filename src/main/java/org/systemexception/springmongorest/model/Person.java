@@ -1,6 +1,8 @@
 package org.systemexception.springmongorest.model;
 
 import org.springframework.data.annotation.Id;
+import org.systemexception.logger.api.Logger;
+import org.systemexception.logger.impl.LoggerImpl;
 
 /**
  * @author leo
@@ -8,14 +10,41 @@ import org.springframework.data.annotation.Id;
  */
 public class Person {
 
-	private static final int MAX_LENGTH = 100;
+	private final static Logger logger = LoggerImpl.getFor(Person.class);
+	public static final int MAX_LENGTH = 50;
 
 	@Id
 	private String id;
-	private final String name, lastName;
+	private String name, lastName;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
 	public Person(final String name, final String lastName) {
-		this.name = name;
-		this.lastName = lastName;
+		this.name = checkStringLength(name);
+		this.lastName = checkStringLength(lastName);
+		logger.info("New person: " + name + ", " + lastName);
+	}
+
+	private String checkStringLength(final String stringToCheck) {
+		String stringValidated = new String();
+		if (stringToCheck.length() > MAX_LENGTH) {
+			stringValidated = stringToCheck.substring(0, MAX_LENGTH);
+			logger.info("Name " + stringToCheck + " truncated to: " + stringValidated);
+		}
+		return stringValidated;
 	}
 }
