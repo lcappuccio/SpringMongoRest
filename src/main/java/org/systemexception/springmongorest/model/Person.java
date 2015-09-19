@@ -3,6 +3,7 @@ package org.systemexception.springmongorest.model;
 import org.springframework.data.annotation.Id;
 import org.systemexception.logger.api.Logger;
 import org.systemexception.logger.impl.LoggerImpl;
+import org.systemexception.springmongorest.exception.PersonException;
 
 /**
  * @author leo
@@ -33,7 +34,10 @@ public class Person {
 		this.lastName = lastName;
 	}
 
-	public Person(final String name, final String lastName) {
+	public Person(final String name, final String lastName) throws PersonException {
+		if (name == null || lastName == null) {
+			throw new PersonException("Null names not allowed");
+		}
 		this.name = checkStringLength(name);
 		this.lastName = checkStringLength(lastName);
 		logger.info("New person: " + name + ", " + lastName);
