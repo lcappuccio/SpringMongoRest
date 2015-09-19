@@ -15,7 +15,7 @@ public interface PersonRepository extends Repository<Person, String> {
 	/**
 	 * @param person
 	 */
-	void add(Person person);
+	void save(Person person);
 
 	/**
 	 * @param person
@@ -31,6 +31,6 @@ public interface PersonRepository extends Repository<Person, String> {
 	 * @param id
 	 * @return
 	 */
-	Optional<Person> findById(String id);
+	Optional<Person> findOne(String id);
 
 }
