@@ -1,5 +1,6 @@
-package org.systemexception.springmongorest.services;
+package org.systemexception.springmongorest.application;
 
+import org.springframework.data.repository.Repository;
 import org.systemexception.springmongorest.model.Person;
 
 import java.util.List;
@@ -7,20 +8,17 @@ import java.util.Optional;
 
 /**
  * @author leo
- * @date 19/09/15 20:03
+ * @date 19/09/15 20:01
  */
-public interface PersonService {
+public interface PersonRepository extends Repository<Person, String> {
 
 	/**
 	 * @param person
-	 * @return
 	 */
-	Person create(Person person);
+	Person save(Person person);
 
 	/**
-	 *
 	 * @param person
-	 * @return
 	 */
 	void delete(Person person);
 
@@ -33,11 +31,6 @@ public interface PersonService {
 	 * @param id
 	 * @return
 	 */
-	Optional<Person> findById(String id);
+	Optional<Person> findOne(String id);
 
-	/**
-	 * @param person
-	 * @return
-	 */
-	void update(Person person);
 }
