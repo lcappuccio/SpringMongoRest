@@ -12,14 +12,11 @@ import java.util.Arrays;
  * @author leo
  * @date 19/09/15 11:56
  */
-@ComponentScan
+@ComponentScan("org.systemexception.springmongorest.*")
 @EnableAutoConfiguration
 @SpringBootApplication
 public class Application {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 
 		ApplicationContext applicationContext = SpringApplication.run(Application.class, args);

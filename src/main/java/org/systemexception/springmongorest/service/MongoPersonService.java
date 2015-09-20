@@ -1,9 +1,12 @@
-package org.systemexception.springmongorest.services;
+package org.systemexception.springmongorest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.systemexception.logger.api.Logger;
+import org.systemexception.logger.impl.LoggerImpl;
+import org.systemexception.springmongorest.application.PersonRepository;
 import org.systemexception.springmongorest.model.Person;
-import org.systemexception.springmongorest.repository.PersonRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +15,11 @@ import java.util.Optional;
  * @author leo
  * @date 19/09/15 20:57
  */
+@Component
 @Service
 public class MongoPersonService implements PersonService {
 
+	private static final Logger logger = LoggerImpl.getFor(MongoPersonService.class);
 	private final PersonRepository personRepository;
 
 	@Autowired
@@ -28,6 +33,7 @@ public class MongoPersonService implements PersonService {
 	 */
 	@Override
 	public Person create(Person person) {
+		logger.info("Save person: " + person.getName() + ", " + person.getLastName());
 		return personRepository.save(person);
 	}
 
@@ -37,6 +43,7 @@ public class MongoPersonService implements PersonService {
 	 */
 	@Override
 	public void delete(Person person) {
+		logger.info("Delete person: " + person.getName() + ", " + person.getLastName());
 		personRepository.delete(person);
 	}
 
@@ -45,7 +52,9 @@ public class MongoPersonService implements PersonService {
 	 */
 	@Override
 	public List<Person> findAll() {
-		return personRepository.findAll();
+		List<Person> persons = personRepository.findAll();
+		logger.info("Listing " + persons.size() + " persons");
+		return persons;
 	}
 
 	/**
@@ -54,6 +63,7 @@ public class MongoPersonService implements PersonService {
 	 */
 	@Override
 	public Optional<Person> findById(String id) {
+		logger.info("Finding id: " + id);
 		return personRepository.findOne(id);
 	}
 
@@ -64,6 +74,7 @@ public class MongoPersonService implements PersonService {
 	@Override
 	public void update(Person person) {
 		Person foundPerson = personRepository.findOne(person.getId()).get();
+		logger.info("Update id: " + person.getId());
 		foundPerson.setName(person.getName());
 		foundPerson.setLastName(person.getLastName());
 		personRepository.save(foundPerson);
