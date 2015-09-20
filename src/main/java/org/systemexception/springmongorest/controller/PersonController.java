@@ -1,11 +1,16 @@
 package org.systemexception.springmongorest.controller;
 
+import com.mangofactory.swagger.plugin.EnableSwagger;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.systemexception.logger.api.Logger;
 import org.systemexception.logger.impl.LoggerImpl;
-import org.systemexception.springmongorest.exception.PersonException;
 import org.systemexception.springmongorest.model.Person;
 import org.systemexception.springmongorest.service.PersonService;
 
@@ -17,8 +22,10 @@ import java.util.Optional;
  * @author leo
  * @date 19/09/15 21:38
  */
+@EnableSwagger
 @RestController
-@RequestMapping("/api/person")
+@RequestMapping(value = "/api/person", produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(basePath = "/api/person", value = "Person", description = "Person REST API")
 public class PersonController {
 
 	private static final Logger logger = LoggerImpl.getFor(PersonController.class);
@@ -29,33 +36,47 @@ public class PersonController {
 		this.personService = personService;
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
+	@ApiOperation(value = "Create person", notes = "Adds a person to the database")
+	@ApiResponses(value = {
+			@ApiResponse(code = 400, message = "Fields are with validation errors"),
+			@ApiResponse(code = 201, message = "")})
 	Person create(@RequestBody @Valid Person person) {
 		logger.info("Received CREATE: " + person.getName() + ", " + person.getLastName());
 		return personService.create(person);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE)
-	void delete(Person person) {
+	@RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "Delete person", notes = "Delete person from database")
+	@ApiResponses(value = {
+			@ApiResponse(code = 400, message = "Fields are with validation errors"),
+			@ApiResponse(code = 201, message = "")})
+	void delete(@RequestBody @Valid Person person) {
 		logger.info("Received DELETE: " + person.getName() + ", " + person.getLastName());
 		personService.delete(person);
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "List all persons", notes = "Produces the full person list in database")
 	List<Person> findAll() {
 		logger.info("Received GET all persons");
 		return personService.findAll();
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@ApiOperation(value = "Find person by id", notes = "Use internal database id")
 	Optional<Person> findById(@PathVariable("id") String id) {
 		logger.info("Received GET id: " + id);
 		return personService.findById(id);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "Update person", notes = "Unknown behaviour if id does not exist")
+	@ApiResponses(value = {
+			@ApiResponse(code = 400, message = "Fields are with validation errors"),
+			@ApiResponse(code = 201, message = "")})
 	void update(@RequestBody @Valid Person person) {
 		logger.info("Received UPDATE: " + person.getId() + ", " + person.getName() + ", " + person.getLastName());
 		personService.update(person);
