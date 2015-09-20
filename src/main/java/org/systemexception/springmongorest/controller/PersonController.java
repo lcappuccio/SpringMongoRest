@@ -55,7 +55,7 @@ public class PersonController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	void update(Person person) {
+	void update(@RequestBody @Valid Person person) {
 		logger.info("Received UPDATE: " + person.getId() + ", " + person.getName() + ", " + person.getLastName());
 		personService.update(person);
 	}
