@@ -1,4 +1,4 @@
-package org.systemexception.springmongorest.application;
+package org.systemexception.springmongorest.repository;
 
 import org.springframework.data.repository.Repository;
 import org.systemexception.springmongorest.model.Person;

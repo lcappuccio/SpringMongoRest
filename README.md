@@ -5,4 +5,8 @@ A REST api with SpringBoot and MondoDb
 
 # Usage
 
-```java -jar mongo-rest.jar```
+```java -jar spring-mongo-rest-VERSION.jar```
+
+# Documentation
+
+Check the bundled [documentation](http://localhost:8080/index.html)
