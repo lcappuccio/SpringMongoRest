@@ -21,20 +21,6 @@ public class Person {
 	public Person() {
 	}
 
-	/**
-	 * @param name
-	 * @param lastName
-	 * @throws PersonException if names don't fullfill requirements
-	 */
-	public Person(final String name, final String lastName) throws PersonException {
-		if (name == null || lastName == null) {
-			throw new PersonException("Null names not allowed");
-		}
-		this.name = checkStringLength(name);
-		this.lastName = checkStringLength(lastName);
-		logger.info("New person: " + name + ", " + lastName);
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -44,7 +30,12 @@ public class Person {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		try {
+			verifyNullValue(name);
+		} catch (PersonException e) {
+			name = "";
+		}
+		this.name = checkStringLength(name);
 	}
 
 	public String getLastName() {
@@ -52,7 +43,12 @@ public class Person {
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		try {
+			verifyNullValue(lastName);
+		} catch (PersonException e) {
+			lastName = "";
+		}
+		this.lastName = checkStringLength(lastName);
 	}
 
 	private String checkStringLength(final String stringToCheck) {
@@ -60,7 +56,16 @@ public class Person {
 		if (stringToCheck.length() > MAX_LENGTH) {
 			stringValidated = stringToCheck.substring(0, MAX_LENGTH);
 			logger.info("Name " + stringToCheck + " truncated to: " + stringValidated);
+		} else {
+			return stringToCheck;
 		}
 		return stringValidated;
 	}
+
+	private void verifyNullValue(String stringToVerify) throws PersonException {
+		if (stringToVerify == null) {
+			throw new PersonException("Invalid null value");
+		}
+	}
+
 }

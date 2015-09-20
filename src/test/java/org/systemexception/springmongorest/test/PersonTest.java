@@ -18,38 +18,40 @@ public class PersonTest {
 	public void build_person() throws PersonException {
 		String name = "John";
 		String lastName = "Doe";
-		sut = new Person(name, lastName);
+		buildPerson(name, lastName);
 		assertTrue(sut != null);
 	}
 
 	@Test
-	public void exception_on_long_names() throws PersonException {
+	public void truncate_long_names() throws PersonException {
 		String name = buildLongString(100);
 		String lastName = "Doe";
-		sut = new Person(name, lastName);
+		buildPerson(name, lastName);
 		assertTrue(sut.getName().length() <= Person.MAX_LENGTH);
 	}
 
 	@Test
-	public void exception_on_long_last_names() throws PersonException {
+	public void truncate_long_last_names() throws PersonException {
 		String name = "John";
 		String lastName = buildLongString(100);
-		sut = new Person(name, lastName);
+		buildPerson(name, lastName);
 		assertTrue(sut.getName().length() <= Person.MAX_LENGTH);
 	}
 
-	@Test(expected = PersonException.class)
-	public void throw_exception_on_null_name() throws PersonException {
+	@Test
+	public void accept_null_name() throws PersonException {
 		String name = null;
 		String lastName = "Doe";
-		sut = new Person(name, lastName);
+		buildPerson(name, lastName);
+		assertTrue(sut.getName().equals(""));
 	}
 
-	@Test(expected = PersonException.class)
-	public void throw_exception_on_null_last_name() throws PersonException {
+	@Test
+	public void accept_null_last_name() throws PersonException {
 		String name = "John";
 		String lastName = null;
-		sut = new Person(name, lastName);
+		buildPerson(name, lastName);
+		assertTrue(sut.getLastName().equals(""));
 	}
 
 	private String buildLongString(final int stringLength) {
@@ -59,4 +61,11 @@ public class PersonTest {
 		}
 		return name;
 	}
+
+	private void buildPerson(String name, String lastName) throws PersonException {
+		sut = new Person();
+		sut.setName(name);
+		sut.setLastName(lastName);
+	}
+
 }

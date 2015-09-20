@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.systemexception.logger.api.Logger;
 import org.systemexception.logger.impl.LoggerImpl;
-import org.systemexception.springmongorest.application.PersonRepository;
+import org.systemexception.springmongorest.exception.PersonException;
+import org.systemexception.springmongorest.repository.PersonRepository;
 import org.systemexception.springmongorest.model.Person;
 
 import java.util.List;

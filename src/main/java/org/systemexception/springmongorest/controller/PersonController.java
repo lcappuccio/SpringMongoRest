@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.systemexception.logger.api.Logger;
 import org.systemexception.logger.impl.LoggerImpl;
+import org.systemexception.springmongorest.exception.PersonException;
 import org.systemexception.springmongorest.model.Person;
 import org.systemexception.springmongorest.service.PersonService;
 
