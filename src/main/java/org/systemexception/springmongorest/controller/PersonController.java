@@ -32,11 +32,12 @@ public class PersonController {
 	private final PersonService personService;
 
 	@Autowired
-	PersonController(PersonService personService) {
+	public PersonController(PersonService personService) {
 		this.personService = personService;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType
+			.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	@ApiOperation(value = "Create person", notes = "Adds a person to the database")
@@ -52,7 +53,7 @@ public class PersonController {
 	@ApiOperation(value = "Delete person", notes = "Delete person from database")
 	@ApiResponses(value = {
 			@ApiResponse(code = 400, message = "Fields are with validation errors"),
-			@ApiResponse(code = 201, message = "")})
+			@ApiResponse(code = 200, message = "")})
 	void delete(@RequestBody @Valid Person person) {
 		logger.info("Received DELETE: " + person.getName() + ", " + person.getLastName());
 		personService.delete(person);
