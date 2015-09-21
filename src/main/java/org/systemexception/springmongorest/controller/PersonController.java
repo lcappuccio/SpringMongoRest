@@ -53,7 +53,7 @@ public class PersonController {
 	@ApiOperation(value = "Delete person", notes = "Delete person from database")
 	@ApiResponses(value = {
 			@ApiResponse(code = 400, message = "Fields are with validation errors"),
-			@ApiResponse(code = 201, message = "")})
+			@ApiResponse(code = 200, message = "")})
 	void delete(@RequestBody @Valid Person person) {
 		logger.info("Received DELETE: " + person.getName() + ", " + person.getLastName());
 		personService.delete(person);
