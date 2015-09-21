@@ -32,11 +32,12 @@ public class PersonController {
 	private final PersonService personService;
 
 	@Autowired
-	PersonController(PersonService personService) {
+	public PersonController(PersonService personService) {
 		this.personService = personService;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType
+			.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	@ApiOperation(value = "Create person", notes = "Adds a person to the database")
