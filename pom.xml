@@ -6,7 +6,7 @@
 
 	<groupId>org.systemexception</groupId>
 	<artifactId>spring-mongo-rest</artifactId>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.2</version>
 	<packaging>war</packaging>
 
 	<parent>
