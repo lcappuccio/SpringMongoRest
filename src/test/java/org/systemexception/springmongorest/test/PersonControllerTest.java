@@ -1,17 +1,13 @@
 package org.systemexception.springmongorest.test;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockServletContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,13 +16,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.systemexception.springmongorest.Application;
 import org.systemexception.springmongorest.controller.PersonController;
 import org.systemexception.springmongorest.model.Person;
-import org.systemexception.springmongorest.repository.PersonRepository;
 import org.systemexception.springmongorest.service.MongoPersonService;
 import org.systemexception.springmongorest.service.PersonService;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -39,7 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PersonControllerTest {
 
 	private PersonService personService;
-	private PersonRepository personRepository;
 	private Person person = new Person();
 	@InjectMocks
 	@Autowired
@@ -53,7 +45,6 @@ public class PersonControllerTest {
 		person.setLastName("PersonLastName");
 		personService = mock(MongoPersonService.class);
 		when(personService.findAll()).thenReturn(null);
-		personRepository = mock(PersonRepository.class);
 		personController = new PersonController(personService);
 		MockitoAnnotations.initMocks(this);
 		sut = MockMvcBuilders.standaloneSetup(personController).build();
