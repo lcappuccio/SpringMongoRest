@@ -5,7 +5,7 @@ A REST api with SpringBoot and MondoDb
 
 # Usage
 
-```java -jar spring-mongo-rest-VERSION.jar```
+```java -jar spring-mongo-rest-VERSION.war```
 
 # Documentation
 
