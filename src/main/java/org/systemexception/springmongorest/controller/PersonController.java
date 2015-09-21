@@ -1,10 +1,9 @@
 package org.systemexception.springmongorest.controller;
 
-import com.mangofactory.swagger.plugin.EnableSwagger;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiResponse;
-import com.wordnik.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,6 +12,7 @@ import org.systemexception.logger.api.Logger;
 import org.systemexception.logger.impl.LoggerImpl;
 import org.systemexception.springmongorest.model.Person;
 import org.systemexception.springmongorest.service.PersonService;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.Optional;
  * @author leo
  * @date 19/09/15 21:38
  */
-@EnableSwagger
+@EnableSwagger2
 @RestController
 @RequestMapping(value = "/api/person", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(basePath = "/api/person", value = "Person", description = "Person REST API")
