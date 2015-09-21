@@ -3,6 +3,8 @@ package org.systemexception.springmongorest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,20 +21,21 @@ import java.util.Arrays;
 @ComponentScan("org.systemexception.springmongorest.*")
 @EnableAutoConfiguration
 @SpringBootApplication
-public class Application {
+public class Application extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		application.showBanner(false);
+		application.profiles("production");
+		return application.sources(Application.class);
+	}
 
 	public static void main(String[] args) {
 
-		ApplicationContext applicationContext = SpringApplication.run(Application.class, args);
-
-		System.out.println("Initializing beans");
-
-		String[] beans = applicationContext.getBeanDefinitionNames();
-		Arrays.sort(beans);
-
-		for (String bean: beans) {
-			System.out.println("Found bean: " + bean);
-		}
+		SpringApplication app = new SpringApplication(Application.class);
+		app.setAdditionalProfiles("development");
+		app.setShowBanner(false);
+		app.run(args);
 	}
 
 	@Bean
@@ -45,7 +48,6 @@ public class Application {
 	}
 
 	private ApiInfo apiInfo() {
-
 		ApiInfo apiInfo = new ApiInfo(
 				"SpringBoot MongoDb Rest API",
 				"An example REST API with SpringBoot and MongoDb",
