@@ -9,4 +9,4 @@ A REST api with SpringBoot and MondoDb
 
 # Documentation
 
-Check the bundled [documentation](http://localhost:8080/index.html)
+Check the bundled [documentation](http://localhost:8080/swagger-ui.html)
