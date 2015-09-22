@@ -5,14 +5,11 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-
-import java.util.Arrays;
 
 /**
  * @author leo
@@ -48,7 +45,7 @@ public class Application extends SpringBootServletInitializer {
 	}
 
 	private ApiInfo apiInfo() {
-		ApiInfo apiInfo = new ApiInfo(
+		return new ApiInfo(
 				"SpringBoot MongoDb Rest API",
 				"An example REST API with SpringBoot and MongoDb",
 				"0.2",
@@ -57,7 +54,6 @@ public class Application extends SpringBootServletInitializer {
 				null,
 				"https://github.com/lcappuccio/SpringMongoRest/blob/master/LICENSE"
 		);
-		return apiInfo;
 	}
 
 }
