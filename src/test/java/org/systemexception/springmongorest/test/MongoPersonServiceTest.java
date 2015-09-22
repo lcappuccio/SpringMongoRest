@@ -75,4 +75,11 @@ public class MongoPersonServiceTest {
 		assertTrue(foundPerson.get().getId() == person.getId());
 		verify(personRepository).findOne(person.getId());
 	}
+
+	@Test
+	public void update_person() {
+		sut = new MongoPersonService(personRepository);
+		sut.update(person);
+		verify(personRepository).save(person);
+	}
 }
