@@ -24,7 +24,7 @@ public class MongoPersonService implements PersonService {
 	private final PersonRepository personRepository;
 
 	@Autowired
-	MongoPersonService(PersonRepository personRepository) {
+	public MongoPersonService(PersonRepository personRepository) {
 		this.personRepository = personRepository;
 	}
 
