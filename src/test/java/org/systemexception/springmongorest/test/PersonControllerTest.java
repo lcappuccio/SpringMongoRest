@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.systemexception.springmongorest.Application;
+import org.systemexception.springmongorest.constants.StatusCodes;
 import org.systemexception.springmongorest.controller.PersonController;
 import org.systemexception.springmongorest.model.Person;
 import org.systemexception.springmongorest.service.MongoPersonService;
@@ -53,7 +54,7 @@ public class PersonControllerTest {
 	@Test
 	public void find_all_persons() throws Exception {
 		sut.perform(MockMvcRequestBuilders.get(ENDPOINT).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status()
-				.is(200));
+				.is(StatusCodes.OK));
 		verify(personService).findAll();
 	}
 
@@ -61,34 +62,45 @@ public class PersonControllerTest {
 	public void find_one_person() throws Exception {
 		String personId = "123";
 		sut.perform(MockMvcRequestBuilders.get(ENDPOINT + personId).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect
-				(status().is(200));
+				(status().is(StatusCodes.OK));
 		verify(personService).findById(personId);
 	}
 
 	@Test
 	public void create_person() throws Exception {
 		sut.perform(MockMvcRequestBuilders.post(ENDPOINT).contentType(MediaType.APPLICATION_JSON_VALUE).content
-				(personJson(person).getBytes())).andExpect(status().is(201));
+				(personJson(person).getBytes())).andExpect(status().is(StatusCodes.CREATED));
 		verify(personService).create(person);
+	}
+
+	@Test
+	public void refuse_create_bad_person() throws Exception {
+		sut.perform(MockMvcRequestBuilders.post(ENDPOINT).contentType(MediaType.APPLICATION_JSON_VALUE).content
+				(badlyFormattedPerson(person).getBytes())).andExpect(status().is(StatusCodes.BAD_REQUEST));
+		verify(personService, never()).create(person);
 	}
 
 	@Test
 	public void delete_person() throws Exception {
 		sut.perform(MockMvcRequestBuilders.delete(ENDPOINT).contentType(MediaType.APPLICATION_JSON_VALUE).content
-				(personJson(person).getBytes())).andExpect(status().is(200));
+				(personJson(person).getBytes())).andExpect(status().is(StatusCodes.OK));
 		verify(personService).delete(person);
 	}
 
 	@Test
 	public void update_person() throws Exception {
 		sut.perform(MockMvcRequestBuilders.put(ENDPOINT).contentType(MediaType.APPLICATION_JSON_VALUE).content
-				(personJson(person).getBytes())).andExpect(status().is(200));
+				(personJson(person).getBytes())).andExpect(status().is(StatusCodes.OK));
 		verify(personService).update(person);
 	}
 
 	private String personJson(Person person) {
 		return "{\"name\":" + "\"" + person.getName() + "\"," +
 				"\"lastName\":"+ "\"" + person.getLastName() + "\"}";
+	}
+
+	private String badlyFormattedPerson(Person person) {
+		return "";
 	}
 
 }

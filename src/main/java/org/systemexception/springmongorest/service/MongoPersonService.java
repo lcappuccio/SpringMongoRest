@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.systemexception.logger.api.Logger;
 import org.systemexception.logger.impl.LoggerImpl;
-import org.systemexception.springmongorest.exception.PersonException;
 import org.systemexception.springmongorest.repository.PersonRepository;
 import org.systemexception.springmongorest.model.Person;
 
@@ -24,7 +23,7 @@ public class MongoPersonService implements PersonService {
 	private final PersonRepository personRepository;
 
 	@Autowired
-	MongoPersonService(PersonRepository personRepository) {
+	public MongoPersonService(PersonRepository personRepository) {
 		this.personRepository = personRepository;
 	}
 
@@ -73,11 +72,12 @@ public class MongoPersonService implements PersonService {
 	 * @return
 	 */
 	@Override
-	public void update(Person person) {
+	public Person update(Person person) {
 		Person foundPerson = personRepository.findOne(person.getId()).get();
 		logger.info("Update id: " + person.getId());
 		foundPerson.setName(person.getName());
 		foundPerson.setLastName(person.getLastName());
 		personRepository.save(foundPerson);
+		return foundPerson;
 	}
 }
