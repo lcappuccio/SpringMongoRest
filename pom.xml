@@ -29,7 +29,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.github.lcappuccio</groupId>
-			<artifactId>CommonLogger</artifactId>
+			<artifactId>common-logger</artifactId>
 			<version>1.1.2</version>
 		</dependency>
 		<dependency>
