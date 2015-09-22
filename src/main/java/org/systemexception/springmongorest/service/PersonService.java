@@ -41,5 +41,5 @@ public interface PersonService {
 	 * @param person
 	 * @return
 	 */
-	void update(Person person);
+	Person update(Person person);
 }

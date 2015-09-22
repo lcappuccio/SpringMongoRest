@@ -45,8 +45,9 @@ public class MongoPersonServiceTest {
 	@Test
 	public void create_person() {
 		sut = new MongoPersonService(personRepository);
-		sut.create(person);
+		Person newPerson = sut.create(person);
 
+		assertTrue(newPerson.equals(person));
 		verify(personRepository).save(person);
 	}
 
@@ -79,7 +80,9 @@ public class MongoPersonServiceTest {
 	@Test
 	public void update_person() {
 		sut = new MongoPersonService(personRepository);
-		sut.update(person);
+		Person updatedPerson = sut.update(person);
+
+		assertTrue(updatedPerson.equals(person));
 		verify(personRepository).save(person);
 	}
 }
