@@ -44,7 +44,7 @@ public class PersonController {
 	@ApiOperation(value = "Create person", notes = "Adds a person to the database")
 	@ApiResponses(value = {
 			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields are with validation errors"),
-			@ApiResponse(code = StatusCodes.CREATED, message = "")})
+			@ApiResponse(code = StatusCodes.CREATED, message = "Person created")})
 	Person create(@RequestBody @Valid Person person) {
 		logger.info("Received CREATE: " + person.getName() + ", " + person.getLastName());
 		return personService.create(person);
@@ -54,7 +54,7 @@ public class PersonController {
 	@ApiOperation(value = "Delete person", notes = "Delete person from database")
 	@ApiResponses(value = {
 			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields are with validation errors"),
-			@ApiResponse(code = StatusCodes.OK, message = "")})
+			@ApiResponse(code = StatusCodes.OK, message = "Person deleted")})
 	void delete(@RequestBody @Valid Person person) {
 		logger.info("Received DELETE: " + person.getName() + ", " + person.getLastName());
 		personService.delete(person);
@@ -78,7 +78,7 @@ public class PersonController {
 	@ApiOperation(value = "Update person", notes = "Unknown behaviour if id does not exist")
 	@ApiResponses(value = {
 			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields are with validation errors"),
-			@ApiResponse(code = StatusCodes.OK, message = "")})
+			@ApiResponse(code = StatusCodes.OK, message = "Person updated")})
 	void update(@RequestBody @Valid Person person) {
 		logger.info("Received UPDATE: " + person.getId() + ", " + person.getName() + ", " + person.getLastName());
 		personService.update(person);
