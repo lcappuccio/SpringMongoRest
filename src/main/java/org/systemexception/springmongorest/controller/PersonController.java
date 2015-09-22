@@ -79,8 +79,8 @@ public class PersonController {
 	@ApiResponses(value = {
 			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields are with validation errors"),
 			@ApiResponse(code = StatusCodes.OK, message = "Person updated")})
-	void update(@RequestBody @Valid Person person) {
+	Person update(@RequestBody @Valid Person person) {
 		logger.info("Received UPDATE: " + person.getId() + ", " + person.getName() + ", " + person.getLastName());
-		personService.update(person);
+		return personService.update(person);
 	}
 }
