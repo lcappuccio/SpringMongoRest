@@ -1,9 +1,13 @@
 # SpringMongoRest
 REST api with SpringBoot and MondoDb
 
-Master: [![Build Status](https://travis-ci.org/lcappuccio/SpringMongoRest.svg?branch=master)](https://travis-ci.org/lcappuccio/SpringMongoRest)
+**Master**
 
-Develop: [![Build Status](https://travis-ci.org/lcappuccio/SpringMongoRest.svg?branch=develop)](https://travis-ci.org/lcappuccio/SpringMongoRest)
+[![Build Status](https://travis-ci.org/lcappuccio/spring-mongo-rest.svg?branch=master)](https://travis-ci.org/lcappuccio/spring-mongo-rest)
+
+**Develop**
+
+[![Build Status](https://travis-ci.org/lcappuccio/spring-mongo-rest.svg?branch=develop)](https://travis-ci.org/lcappuccio/spring-mongo-rest)
 
 # Requirements
 
