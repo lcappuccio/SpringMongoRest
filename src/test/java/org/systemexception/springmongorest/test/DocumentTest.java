@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.systemexception.springmongorest.exception.DocumentException;
 import org.systemexception.springmongorest.model.Document;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -22,13 +23,14 @@ public class DocumentTest {
 	@BeforeClass
 	public static void setUp() throws IOException {
 		// Create large file
-		FileOutputStream fileOutputStream = new FileOutputStream("target/large_file.bin");
+		FileOutputStream fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + File.separator +
+				"large_file.bin");
 		bigFile = new byte[2 * Document.MAX_SIZE_BYTES];
 		fileOutputStream.write(bigFile);
 		fileOutputStream.flush();
 		fileOutputStream.close();
 		// Create regular file
-		fileOutputStream = new FileOutputStream("target/regular_file.bin");
+		fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + File.separator + "regular_file.bin");
 		regularFile = new byte[1 * Document.MAX_SIZE_BYTES];
 		fileOutputStream.write(regularFile);
 		fileOutputStream.flush();
