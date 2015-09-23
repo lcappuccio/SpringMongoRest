@@ -40,7 +40,8 @@ public class MongoDocumentService implements DocumentService {
 
 	@Override
 	public Optional<Document> findById(String id) {
-		return null;
+		logger.info("Finding id: " + id);
+		return documentRepository.findOne(id);
 	}
 
 	@Override

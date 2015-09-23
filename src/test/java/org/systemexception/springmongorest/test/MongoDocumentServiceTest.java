@@ -9,6 +9,7 @@ import org.systemexception.springmongorest.service.MongoDocumentService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
@@ -61,5 +62,14 @@ public class MongoDocumentServiceTest {
 
 		assertTrue(documents.size() == documentList.size());
 		verify(documentRepository).findAll();
+	}
+
+	@Test
+	public void find_one_document() {
+		sut = new MongoDocumentService(documentRepository);
+		Optional<Document> foundPerson = sut.findById(document.getId());
+
+		assertTrue(Objects.equals(foundPerson.get().getId(), document.getId()));
+		verify(documentRepository).findOne(document.getId());
 	}
 }
