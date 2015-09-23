@@ -64,7 +64,8 @@ public class PersonControllerTest {
 	public void find_one_person() throws Exception {
 		personService.create(person);
 		when(personService.findById(any())).thenReturn(Optional.of(person));
-		sut.perform(MockMvcRequestBuilders.get(ENDPOINT + person.getId()).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect
+		sut.perform(MockMvcRequestBuilders.get(ENDPOINT + person.getId()).accept(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect
 				(status().is(StatusCodes.OK));
 		verify(personService).findById(any());
 	}
