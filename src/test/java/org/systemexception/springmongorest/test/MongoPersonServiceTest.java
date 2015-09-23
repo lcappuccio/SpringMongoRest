@@ -2,22 +2,17 @@ package org.systemexception.springmongorest.test;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.systemexception.springmongorest.Application;
 import org.systemexception.springmongorest.model.Person;
 import org.systemexception.springmongorest.repository.PersonRepository;
 import org.systemexception.springmongorest.service.MongoPersonService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 /**
  * @author leo
@@ -73,7 +68,7 @@ public class MongoPersonServiceTest {
 		sut = new MongoPersonService(personRepository);
 		Optional<Person> foundPerson = sut.findById(person.getId());
 
-		assertTrue(foundPerson.get().getId() == person.getId());
+		assertTrue(Objects.equals(foundPerson.get().getId(), person.getId()));
 		verify(personRepository).findOne(person.getId());
 	}
 
