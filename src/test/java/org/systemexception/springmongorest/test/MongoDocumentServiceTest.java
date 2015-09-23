@@ -7,10 +7,7 @@ import org.systemexception.springmongorest.model.Document;
 import org.systemexception.springmongorest.repository.DocumentRepository;
 import org.systemexception.springmongorest.service.MongoDocumentService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -50,7 +47,7 @@ public class MongoDocumentServiceTest {
 	@Test
 	public void delete_document() {
 		sut = new MongoDocumentService(documentRepository);
-		sut.delete(document);
+		sut.delete(document.getId());
 
 		verify(documentRepository).delete(document);
 	}
@@ -58,7 +55,7 @@ public class MongoDocumentServiceTest {
 	@Test
 	public void find_all_documents() {
 		sut = new MongoDocumentService(documentRepository);
-		List<Document> documents = sut.findAll();
+		List<List<String>> documents = sut.findAll();
 
 		assertTrue(documents.size() == documentList.size());
 		verify(documentRepository).findAll();
@@ -73,12 +70,4 @@ public class MongoDocumentServiceTest {
 		verify(documentRepository).findOne(document.getId());
 	}
 
-	@Test
-	public void update_document() {
-		sut = new MongoDocumentService(documentRepository);
-		Document updatedDocument = sut.update(document);
-
-		assertTrue(updatedDocument.equals(document));
-		verify(documentRepository).save(document);
-	}
 }

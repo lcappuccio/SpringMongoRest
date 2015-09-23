@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.systemexception.logger.api.Logger;
 import org.systemexception.logger.impl.LoggerImpl;
-import org.systemexception.springmongorest.exception.DocumentException;
 import org.systemexception.springmongorest.model.Document;
 import org.systemexception.springmongorest.repository.DocumentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,32 +34,26 @@ public class MongoDocumentService implements DocumentService {
 	}
 
 	@Override
-	public void delete(Document document) {
-		documentRepository.delete(document);
+	public void delete(String id) {
+		documentRepository.delete(documentRepository.findOne(id).get());
 	}
 
 	@Override
-	public List<Document> findAll() {
-		return documentRepository.findAll();
+	public List<List<String>> findAll() {
+		List<List<String>> documentList = new ArrayList<>();
+		List<Document> documents = documentRepository.findAll();
+		for (Document document: documents) {
+			List<String> documentElement = new ArrayList<>();
+			documentElement.add(document.getId());
+			documentElement.add(document.getFileName());
+			documentList.add(documentElement);
+		}
+		return documentList;
 	}
 
 	@Override
 	public Optional<Document> findById(String id) {
 		logger.info("Finding id: " + id);
 		return documentRepository.findOne(id);
-	}
-
-	@Override
-	public Document update(Document document) {
-		Document foundDocument = documentRepository.findOne(document.getId()).get();
-		logger.info("Update id: " + document.getId());
-		try {
-			foundDocument.setFileName(document.getFileName());
-			foundDocument.setFileContents(document.getFileContents());
-		} catch (DocumentException e) {
-			logger.error("Error updating record", e);
-		}
-		documentRepository.save(foundDocument);
-		return foundDocument;
 	}
 }

@@ -57,18 +57,17 @@ public class DocumentControllerTest {
 
 	@Test
 	public void find_all_documets() throws Exception {
-		sut.perform(MockMvcRequestBuilders.get(ENDPOINT).accept(MediaType.APPLICATION_JSON)).andExpect(status()
+		sut.perform(MockMvcRequestBuilders.get(ENDPOINT).content(document.getFileContents())).andExpect(status()
 				.is(StatusCodes.OK));
 		verify(documentService).findAll();
 	}
 
 	@Test
-	public void find_one_person() throws Exception {
+	public void find_one_document() throws Exception {
 		documentService.create(document);
 		when(documentService.findById(any())).thenReturn(Optional.of(document));
 		sut.perform(MockMvcRequestBuilders.get(ENDPOINT + document.getId()).accept(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect
-						(status().is(StatusCodes.OK));
+				.andExpect(status().is(StatusCodes.OK));
 		verify(documentService).findById(any());
 	}
 

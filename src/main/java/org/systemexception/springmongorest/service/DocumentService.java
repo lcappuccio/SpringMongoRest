@@ -21,15 +21,15 @@ public interface DocumentService {
 
 	/**
 	 *
-	 * @param document
+	 * @param id
 	 * @return
 	 */
-	void delete(Document document);
+	void delete(String id);
 
 	/**
 	 * @return
 	 */
-	List<Document> findAll();
+	List<List<String>> findAll();
 
 	/**
 	 * @param id
@@ -37,9 +37,4 @@ public interface DocumentService {
 	 */
 	Optional<Document> findById(String id);
 
-	/**
-	 * @param document
-	 * @return
-	 */
-	Document update(Document document);
 }

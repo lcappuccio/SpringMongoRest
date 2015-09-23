@@ -42,7 +42,7 @@ public class PersonController {
 	@ResponseBody
 	@ApiOperation(value = "Create person", notes = "Adds a person to the database")
 	@ApiResponses(value = {
-			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields are with validation errors"),
+			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields have validation errors"),
 			@ApiResponse(code = StatusCodes.CREATED, message = "Person created")})
 	Person create(@RequestBody @Valid Person person) {
 		logger.info("Received CREATE: " + person.getName() + ", " + person.getLastName());
