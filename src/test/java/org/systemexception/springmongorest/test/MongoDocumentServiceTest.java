@@ -4,19 +4,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.systemexception.springmongorest.exception.DocumentException;
 import org.systemexception.springmongorest.model.Document;
-import org.systemexception.springmongorest.model.Person;
 import org.systemexception.springmongorest.repository.DocumentRepository;
 import org.systemexception.springmongorest.service.MongoDocumentService;
-import org.systemexception.springmongorest.service.MongoPersonService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 /**
  * @author leo
@@ -48,5 +44,13 @@ public class MongoDocumentServiceTest {
 
 		assertTrue(newDocument.equals(document));
 		verify(documentRepository).save(document);
+	}
+
+	@Test
+	public void delete_document() {
+		sut = new MongoDocumentService(documentRepository);
+		sut.delete(document);
+
+		verify(documentRepository).delete(document);
 	}
 }

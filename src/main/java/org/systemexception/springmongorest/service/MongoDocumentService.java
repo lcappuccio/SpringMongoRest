@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.systemexception.logger.api.Logger;
 import org.systemexception.logger.impl.LoggerImpl;
 import org.systemexception.springmongorest.model.Document;
-import org.systemexception.springmongorest.model.Person;
 import org.systemexception.springmongorest.repository.DocumentRepository;
-import org.systemexception.springmongorest.repository.PersonRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +30,7 @@ public class MongoDocumentService implements DocumentService {
 
 	@Override
 	public void delete(Document document) {
-
+		documentRepository.delete(document);
 	}
 
 	@Override
