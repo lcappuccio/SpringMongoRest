@@ -17,7 +17,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author leo
@@ -43,7 +42,7 @@ public class PersonController {
 	@ResponseBody
 	@ApiOperation(value = "Create person", notes = "Adds a person to the database")
 	@ApiResponses(value = {
-			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields are with validation errors"),
+			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields have validation errors"),
 			@ApiResponse(code = StatusCodes.CREATED, message = "Person created")})
 	Person create(@RequestBody @Valid Person person) {
 		logger.info("Received CREATE: " + person.getName() + ", " + person.getLastName());
@@ -69,9 +68,9 @@ public class PersonController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	@ApiOperation(value = "Find person by id", notes = "Use internal database id")
-	Optional<Person> findById(@PathVariable("id") String id) {
+	Person findById(@PathVariable("id") String id) {
 		logger.info("Received GET id: " + id);
-		return personService.findById(id);
+		return personService.findById(id).orElse(null);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
