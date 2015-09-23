@@ -3,6 +3,7 @@ package org.systemexception.springmongorest.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.systemexception.logger.api.Logger;
 import org.systemexception.logger.impl.LoggerImpl;
+import org.systemexception.springmongorest.exception.DocumentException;
 import org.systemexception.springmongorest.model.Document;
 import org.systemexception.springmongorest.repository.DocumentRepository;
 
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- *  @author leo
+ * @author leo
  * @date 23/09/15 17:47
  */
 public class MongoDocumentService implements DocumentService {
@@ -46,6 +47,15 @@ public class MongoDocumentService implements DocumentService {
 
 	@Override
 	public Document update(Document document) {
-		return null;
+		Document foundDocument = documentRepository.findOne(document.getId()).get();
+		logger.info("Update id: " + document.getId());
+		try {
+			foundDocument.setFileName(document.getFileName());
+			foundDocument.setFileContents(document.getFileContents());
+		} catch (DocumentException e) {
+			logger.error("Error updating record", e);
+		}
+		documentRepository.save(foundDocument);
+		return foundDocument;
 	}
 }

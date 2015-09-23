@@ -67,9 +67,18 @@ public class MongoDocumentServiceTest {
 	@Test
 	public void find_one_document() {
 		sut = new MongoDocumentService(documentRepository);
-		Optional<Document> foundPerson = sut.findById(document.getId());
+		Optional<Document> foundDocument = sut.findById(document.getId());
 
-		assertTrue(Objects.equals(foundPerson.get().getId(), document.getId()));
+		assertTrue(Objects.equals(foundDocument.get().getId(), document.getId()));
 		verify(documentRepository).findOne(document.getId());
+	}
+
+	@Test
+	public void update_document() {
+		sut = new MongoDocumentService(documentRepository);
+		Document updatedDocument = sut.update(document);
+
+		assertTrue(updatedDocument.equals(document));
+		verify(documentRepository).save(document);
 	}
 }
