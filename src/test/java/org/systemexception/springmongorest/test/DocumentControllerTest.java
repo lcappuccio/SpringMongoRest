@@ -21,6 +21,9 @@ import org.systemexception.springmongorest.model.Document;
 import org.systemexception.springmongorest.service.DocumentService;
 import org.systemexception.springmongorest.service.MongoDocumentService;
 
+import java.util.Optional;
+
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -59,6 +62,16 @@ public class DocumentControllerTest {
 		sut.perform(MockMvcRequestBuilders.get(ENDPOINT).accept(MediaType.APPLICATION_JSON)).andExpect(status()
 				.is(StatusCodes.OK));
 		verify(documentService).findAll();
+	}
+
+	@Test
+	public void find_one_person() throws Exception {
+		documentService.create(document);
+		when(documentService.findById(any())).thenReturn(Optional.of(document));
+		sut.perform(MockMvcRequestBuilders.get(ENDPOINT + document.getId()).accept(MediaType.APPLICATION_JSON_VALUE))
+		.andExpect
+				(status().is(StatusCodes.OK));
+		verify(documentService).findById(any());
 	}
 
 }
