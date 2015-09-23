@@ -35,7 +35,7 @@ public class MongoDocumentService implements DocumentService {
 
 	@Override
 	public List<Document> findAll() {
-		return null;
+		return documentRepository.findAll();
 	}
 
 	@Override
