@@ -1,6 +1,8 @@
 package org.systemexception.springmongorest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.systemexception.logger.api.Logger;
 import org.systemexception.logger.impl.LoggerImpl;
 import org.systemexception.springmongorest.exception.DocumentException;
@@ -14,6 +16,8 @@ import java.util.Optional;
  * @author leo
  * @date 23/09/15 17:47
  */
+@Component
+@Service
 public class MongoDocumentService implements DocumentService {
 
 	private static final Logger logger = LoggerImpl.getFor(MongoDocumentService.class);
