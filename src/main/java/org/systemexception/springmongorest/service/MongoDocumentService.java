@@ -1,6 +1,12 @@
 package org.systemexception.springmongorest.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.systemexception.logger.api.Logger;
+import org.systemexception.logger.impl.LoggerImpl;
+import org.systemexception.springmongorest.model.Document;
 import org.systemexception.springmongorest.model.Person;
+import org.systemexception.springmongorest.repository.DocumentRepository;
+import org.systemexception.springmongorest.repository.PersonRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,30 +15,38 @@ import java.util.Optional;
  *  @author leo
  * @date 23/09/15 17:47
  */
-public class MongoDocumentService implements PersonService {
+public class MongoDocumentService implements DocumentService {
+
+	private static final Logger logger = LoggerImpl.getFor(MongoDocumentService.class);
+	private final DocumentRepository documentRepository;
+
+	@Autowired
+	public MongoDocumentService(DocumentRepository documentRepository) {
+		this.documentRepository = documentRepository;
+	}
 
 	@Override
-	public Person create(Person person) {
+	public Document create(Document document) {
+		return documentRepository.save(document);
+	}
+
+	@Override
+	public void delete(Document document) {
+
+	}
+
+	@Override
+	public List<Document> findAll() {
 		return null;
 	}
 
 	@Override
-	public void delete(Person person) {
-
-	}
-
-	@Override
-	public List<Person> findAll() {
+	public Optional<Document> findById(String id) {
 		return null;
 	}
 
 	@Override
-	public Optional<Person> findById(String id) {
-		return null;
-	}
-
-	@Override
-	public Person update(Person person) {
+	public Document update(Document document) {
 		return null;
 	}
 }

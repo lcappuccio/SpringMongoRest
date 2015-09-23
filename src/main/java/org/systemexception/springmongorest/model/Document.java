@@ -5,6 +5,8 @@ import org.systemexception.logger.api.Logger;
 import org.systemexception.logger.impl.LoggerImpl;
 import org.systemexception.springmongorest.exception.DocumentException;
 
+import java.util.Arrays;
+
 /**
  * @author leo
  * @date 23/09/15 14:53
@@ -62,5 +64,26 @@ public class Document {
 		} else {
 			this.fileContents = fileContents;
 		}
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Document document = (Document) o;
+
+		if (id != null ? !id.equals(document.id) : document.id != null) return false;
+		if (fileName != null ? !fileName.equals(document.fileName) : document.fileName != null) return false;
+		return Arrays.equals(fileContents, document.fileContents);
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
+		result = 31 * result + (fileContents != null ? Arrays.hashCode(fileContents) : 0);
+		return result;
 	}
 }
