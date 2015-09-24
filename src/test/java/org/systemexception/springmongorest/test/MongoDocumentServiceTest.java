@@ -26,6 +26,7 @@ public class MongoDocumentServiceTest {
 	@Before
 	public void setUp() throws DocumentException {
 		document = new Document();
+		document.setId("123");
 		document.setFileName("fileName");
 		document.setFileContents("fileContentsAreHere".getBytes());
 		documentList.add(document);
