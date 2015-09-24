@@ -33,8 +33,14 @@ public class MongoDocumentService implements DocumentService {
 	}
 
 	@Override
-	public void delete(String id) {
-		documentRepository.delete(documentRepository.findOne(id).get());
+	public Boolean delete(String id) {
+		Document document = documentRepository.findOne(id).get();
+		if (!document.getId().isEmpty()) {
+			documentRepository.delete(document);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

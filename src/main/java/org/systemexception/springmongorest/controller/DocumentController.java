@@ -62,9 +62,13 @@ public class DocumentController {
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	@ApiOperation(value = "Delete document", notes = "Delete document from database")
 	@ApiResponses(value = {@ApiResponse(code = StatusCodes.OK, message = "Document deleted")})
-	void delete(@PathVariable("id") String id) {
+	HttpStatus delete(@PathVariable("id") String id) {
 		logger.info("Received DELETE: " + id);
-		documentService.delete(id);
+		if (documentService.delete(id)) {
+			return HttpStatus.FOUND;
+		} else {
+			return HttpStatus.NOT_FOUND;
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
