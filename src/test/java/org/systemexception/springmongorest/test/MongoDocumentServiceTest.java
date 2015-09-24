@@ -55,7 +55,7 @@ public class MongoDocumentServiceTest {
 	@Test
 	public void find_all_documents() {
 		sut = new MongoDocumentService(documentRepository);
-		List<List<String>> documents = sut.findAll();
+		List<Document> documents = sut.findAll();
 
 		assertTrue(documents.size() == documentList.size());
 		verify(documentRepository).findAll();

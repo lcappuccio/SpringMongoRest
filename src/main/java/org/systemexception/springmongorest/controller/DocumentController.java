@@ -26,7 +26,7 @@ import java.util.List;
 @EnableSwagger2
 @RestController
 @RequestMapping(value = "/api/document")
-@Api(basePath = "/api/document", value = "Document", description = "Document files REST API")
+@Api(basePath = "/api/document", value = "Document", description = "Documents REST API")
 public class DocumentController {
 
 	private final static Logger logger = LoggerImpl.getFor(DocumentController.class);
@@ -50,6 +50,7 @@ public class DocumentController {
 		Document documentReceived = new Document();
 		documentReceived.setFileName(fileName);
 		documentReceived.setFileContents(receivedFile.getBytes());
+		documentReceived.setFileSize(receivedFile.getSize());
 		Document documentCreated = documentService.create(documentReceived);
 		if (documentCreated.getFileContents().equals(documentReceived.getFileContents())) {
 			return HttpStatus.CREATED;
@@ -68,7 +69,7 @@ public class DocumentController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ApiOperation(value = "List all documents", notes = "Produces the full document list in database")
-	List<List<String>> findAll() {
+	List<Document> findAll() {
 		logger.info("Received GET all documents");
 		return documentService.findAll();
 	}

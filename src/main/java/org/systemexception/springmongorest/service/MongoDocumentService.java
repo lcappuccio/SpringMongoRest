@@ -8,7 +8,6 @@ import org.systemexception.logger.impl.LoggerImpl;
 import org.systemexception.springmongorest.model.Document;
 import org.systemexception.springmongorest.repository.DocumentRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,16 +38,8 @@ public class MongoDocumentService implements DocumentService {
 	}
 
 	@Override
-	public List<List<String>> findAll() {
-		List<List<String>> documentList = new ArrayList<>();
-		List<Document> documents = documentRepository.findAll();
-		for (Document document: documents) {
-			List<String> documentElement = new ArrayList<>();
-			documentElement.add(document.getId());
-			documentElement.add(document.getFileName());
-			documentList.add(documentElement);
-		}
-		return documentList;
+	public List<Document> findAll() {
+		return documentRepository.findAll();
 	}
 
 	@Override

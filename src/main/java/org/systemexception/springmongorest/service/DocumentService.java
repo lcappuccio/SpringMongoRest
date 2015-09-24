@@ -29,7 +29,7 @@ public interface DocumentService {
 	/**
 	 * @return
 	 */
-	List<List<String>> findAll();
+	List<Document> findAll();
 
 	/**
 	 * @param id
