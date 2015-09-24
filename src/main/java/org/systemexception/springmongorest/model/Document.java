@@ -1,5 +1,6 @@
 package org.systemexception.springmongorest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.systemexception.logger.api.Logger;
 import org.systemexception.logger.impl.LoggerImpl;
@@ -19,7 +20,9 @@ public class Document {
 	@Id
 	private String id;
 	private String fileName;
+	@JsonIgnore
 	private byte[] fileContents;
+	private long fileSize;
 
 	public Document() {
 	}
@@ -47,8 +50,12 @@ public class Document {
 		}
 	}
 
-	public int getFileSize() {
-		return fileContents.length;
+	public long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
 	}
 
 	public byte[] getFileContents() {

@@ -26,7 +26,7 @@ import java.util.List;
 @EnableSwagger2
 @RestController
 @RequestMapping(value = "/api/document")
-@Api(basePath = "/api/document", value = "Document", description = "Document files REST API")
+@Api(basePath = "/api/document", value = "Document", description = "Documents REST API")
 public class DocumentController {
 
 	private final static Logger logger = LoggerImpl.getFor(DocumentController.class);
@@ -40,7 +40,7 @@ public class DocumentController {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	@ApiOperation(value = "Create document", notes = "Adds a receivedFile to the database")
+	@ApiOperation(value = "Create document", notes = "Adds a document to the database")
 	@ApiResponses(value = {
 			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields have validation errors"),
 			@ApiResponse(code = StatusCodes.CREATED, message = "Document created")})
@@ -50,33 +50,36 @@ public class DocumentController {
 		Document documentReceived = new Document();
 		documentReceived.setFileName(fileName);
 		documentReceived.setFileContents(receivedFile.getBytes());
+		documentReceived.setFileSize(receivedFile.getSize());
 		Document documentCreated = documentService.create(documentReceived);
 		if (documentCreated.getFileContents().equals(documentReceived.getFileContents())) {
 			return HttpStatus.CREATED;
 		} else {
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+			return HttpStatus.BAD_REQUEST;
 		}
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	@ApiOperation(value = "Delete receivedFile", notes = "Delete receivedFile from database")
-	@ApiResponses(value = {
-			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields have validation errors"),
-			@ApiResponse(code = StatusCodes.OK, message = "Document deleted")})
-	void delete(@PathVariable("id") String id) {
+	@ApiOperation(value = "Delete document", notes = "Delete document from database")
+	@ApiResponses(value = {@ApiResponse(code = StatusCodes.OK, message = "Document deleted")})
+	HttpStatus delete(@PathVariable("id") String id) {
 		logger.info("Received DELETE: " + id);
-		documentService.delete(id);
+		if (documentService.delete(id)) {
+			return HttpStatus.FOUND;
+		} else {
+			return HttpStatus.NOT_FOUND;
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	@ApiOperation(value = "List all documents", notes = "Produces the full receivedFile list in database")
-	List<List<String>> findAll() {
+	@ApiOperation(value = "List all documents", notes = "Produces the full document list in database")
+	List<Document> findAll() {
 		logger.info("Received GET all documents");
 		return documentService.findAll();
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	@ApiOperation(value = "Find receivedFile by id", notes = "Use internal database id")
+	@ApiOperation(value = "Find document by id", notes = "Use database document id")
 	Document findById(@PathVariable("id") String id) {
 		logger.info("Received GET id: " + id);
 		return documentService.findById(id).orElse(null);

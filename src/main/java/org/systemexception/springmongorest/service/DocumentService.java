@@ -24,12 +24,12 @@ public interface DocumentService {
 	 * @param id
 	 * @return
 	 */
-	void delete(String id);
+	Boolean delete(String id);
 
 	/**
 	 * @return
 	 */
-	List<List<String>> findAll();
+	List<Document> findAll();
 
 	/**
 	 * @param id

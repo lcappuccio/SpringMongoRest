@@ -26,6 +26,7 @@ public class MongoDocumentServiceTest {
 	@Before
 	public void setUp() throws DocumentException {
 		document = new Document();
+		document.setId("123");
 		document.setFileName("fileName");
 		document.setFileContents("fileContentsAreHere".getBytes());
 		documentList.add(document);
@@ -55,7 +56,7 @@ public class MongoDocumentServiceTest {
 	@Test
 	public void find_all_documents() {
 		sut = new MongoDocumentService(documentRepository);
-		List<List<String>> documents = sut.findAll();
+		List<Document> documents = sut.findAll();
 
 		assertTrue(documents.size() == documentList.size());
 		verify(documentRepository).findAll();
