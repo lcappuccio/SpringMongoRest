@@ -1,5 +1,5 @@
 # SpringMongoRest
-REST api with SpringBoot and MondoDb
+REST api with SpringBoot and MondoDb. SpringBoot Actuator is enabled.
 
 **Master**
 
