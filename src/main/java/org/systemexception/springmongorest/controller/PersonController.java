@@ -4,12 +4,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.systemexception.logger.api.Logger;
-import org.systemexception.logger.impl.LoggerImpl;
 import org.systemexception.springmongorest.constants.StatusCodes;
 import org.systemexception.springmongorest.model.Person;
 import org.systemexception.springmongorest.service.PersonService;
@@ -28,7 +28,7 @@ import java.util.List;
 @Api(basePath = "/api/person", value = "Person", description = "Person REST API")
 public class PersonController {
 
-	private static final Logger logger = LoggerImpl.getFor(PersonController.class);
+	private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
 	private final PersonService personService;
 
 	@Autowired
