@@ -1,9 +1,9 @@
 package org.systemexception.springmongorest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
-import org.systemexception.logger.api.Logger;
-import org.systemexception.logger.impl.LoggerImpl;
 import org.systemexception.springmongorest.exception.DocumentException;
 
 import java.util.Arrays;
@@ -14,7 +14,7 @@ import java.util.Arrays;
  */
 public class Document {
 
-	private final static Logger logger = LoggerImpl.getFor(Document.class);
+	private final static Logger logger = LoggerFactory.getLogger(Document.class);
 	public static final int MAX_SIZE_BYTES = 4000000, FILENAME_LENGTH = 255;
 
 	@Id

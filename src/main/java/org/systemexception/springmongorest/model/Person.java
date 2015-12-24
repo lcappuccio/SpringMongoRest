@@ -1,8 +1,8 @@
 package org.systemexception.springmongorest.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
-import org.systemexception.logger.api.Logger;
-import org.systemexception.logger.impl.LoggerImpl;
 import org.systemexception.springmongorest.exception.PersonException;
 
 /**
@@ -11,7 +11,7 @@ import org.systemexception.springmongorest.exception.PersonException;
  */
 public class Person {
 
-	private final static Logger logger = LoggerImpl.getFor(Person.class);
+	private final static Logger logger = LoggerFactory.getLogger(Person.class);
 	public static final int MAX_LENGTH = 50;
 
 	@Id

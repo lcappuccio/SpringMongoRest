@@ -8,6 +8,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,6 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Application.class})
 @WebAppConfiguration
+@TestPropertySource(locations = "classpath:application.properties")
 public class DocumentControllerTest {
 
 	private DocumentService documentService;
@@ -55,7 +58,7 @@ public class DocumentControllerTest {
 	}
 
 	@Test
-	public void find_all_documets() throws Exception {
+	public void find_all_documents() throws Exception {
 		sut.perform(MockMvcRequestBuilders.get(ENDPOINT).content(document.getFileContents())).andExpect(status()
 				.is(StatusCodes.OK));
 		verify(documentService).findAll();
@@ -68,6 +71,27 @@ public class DocumentControllerTest {
 		sut.perform(MockMvcRequestBuilders.get(ENDPOINT + document.getId()).accept(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().is(StatusCodes.OK));
 		verify(documentService).findById(any());
+	}
+
+	@Test
+	public void create_document() throws Exception {
+		MockMultipartFile dataFile = new MockMultipartFile("file", "filename.txt", "text/plain",
+				"some xml".getBytes());
+		Document documentReceived = new Document();
+		documentReceived.setFileName(dataFile.getName());
+		documentReceived.setFileContents(dataFile.getBytes());
+		documentReceived.setFileSize(dataFile.getSize());
+		when(documentService.create(any())).thenReturn(documentReceived);
+		sut.perform(MockMvcRequestBuilders.fileUpload(ENDPOINT).file(dataFile).param("filename", "filename.txt"));
+		verify(documentService).create(any());
+	}
+
+	@Test
+	public void delete_a_document() throws Exception {
+		String documentId = "1";
+		sut.perform(MockMvcRequestBuilders.delete(ENDPOINT + documentId).content(document.getFileContents()))
+				.andExpect(status().is(StatusCodes.OK));
+		verify(documentService).delete(documentId);
 	}
 
 }

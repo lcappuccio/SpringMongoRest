@@ -1,10 +1,10 @@
 package org.systemexception.springmongorest.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.systemexception.logger.api.Logger;
-import org.systemexception.logger.impl.LoggerImpl;
 import org.systemexception.springmongorest.model.Document;
 import org.systemexception.springmongorest.repository.DocumentRepository;
 
@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 public class MongoDocumentService implements DocumentService {
 
-	private static final Logger logger = LoggerImpl.getFor(MongoDocumentService.class);
+	private static final Logger logger = LoggerFactory.getLogger(MongoDocumentService.class);
 	private final DocumentRepository documentRepository;
 
 	@Autowired
