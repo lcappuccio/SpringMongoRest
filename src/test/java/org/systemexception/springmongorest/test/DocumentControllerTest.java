@@ -55,7 +55,7 @@ public class DocumentControllerTest {
 	}
 
 	@Test
-	public void find_all_documets() throws Exception {
+	public void find_all_documents() throws Exception {
 		sut.perform(MockMvcRequestBuilders.get(ENDPOINT).content(document.getFileContents())).andExpect(status()
 				.is(StatusCodes.OK));
 		verify(documentService).findAll();
