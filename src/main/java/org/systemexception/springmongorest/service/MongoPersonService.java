@@ -1,12 +1,12 @@
 package org.systemexception.springmongorest.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.systemexception.logger.api.Logger;
-import org.systemexception.logger.impl.LoggerImpl;
-import org.systemexception.springmongorest.repository.PersonRepository;
 import org.systemexception.springmongorest.model.Person;
+import org.systemexception.springmongorest.repository.PersonRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 public class MongoPersonService implements PersonService {
 
-	private static final Logger logger = LoggerImpl.getFor(MongoPersonService.class);
+	private static final Logger logger = LoggerFactory.getLogger(MongoPersonService.class);
 	private final PersonRepository personRepository;
 
 	@Autowired
