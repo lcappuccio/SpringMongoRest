@@ -67,7 +67,8 @@ public class MongoDocumentServiceTest {
 		sut = new MongoDocumentService(documentRepository);
 		Optional<Document> foundDocument = sut.findById(document.getId());
 
-		assertTrue(Objects.equals(foundDocument.get().getId(), document.getId()));
+		assertTrue(Objects.equals(foundDocument.get(), document));
+		assertTrue(Objects.equals(foundDocument.get().hashCode(), document.hashCode()));
 		verify(documentRepository).findOne(document.getId());
 	}
 
