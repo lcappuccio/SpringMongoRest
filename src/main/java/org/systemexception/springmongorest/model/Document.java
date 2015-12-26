@@ -80,6 +80,7 @@ public class Document {
 
 		Document document = (Document) o;
 
+		if (fileSize != document.fileSize) return false;
 		if (id != null ? !id.equals(document.id) : document.id != null) return false;
 		if (fileName != null ? !fileName.equals(document.fileName) : document.fileName != null) return false;
 		return Arrays.equals(fileContents, document.fileContents);
@@ -90,7 +91,8 @@ public class Document {
 	public int hashCode() {
 		int result = id != null ? id.hashCode() : 0;
 		result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
-		result = 31 * result + (fileContents != null ? Arrays.hashCode(fileContents) : 0);
+		result = 31 * result + Arrays.hashCode(fileContents);
+		result = 31 * result + (int) (fileSize ^ (fileSize >>> 32));
 		return result;
 	}
 }

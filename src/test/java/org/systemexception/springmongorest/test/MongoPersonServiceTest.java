@@ -78,6 +78,7 @@ public class MongoPersonServiceTest {
 		Person updatedPerson = sut.update(person);
 
 		assertTrue(updatedPerson.equals(person));
+		assertTrue(updatedPerson.hashCode() == person.hashCode());
 		verify(personRepository).save(person);
 	}
 }
