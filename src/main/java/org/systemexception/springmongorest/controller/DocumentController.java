@@ -44,7 +44,8 @@ public class DocumentController {
 	@ApiResponses(value = {
 			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields have validation errors"),
 			@ApiResponse(code = StatusCodes.CREATED, message = "Document created")})
-	HttpStatus create(@RequestParam("filename") String fileName, @RequestParam("file") MultipartFile receivedFile)
+	public HttpStatus create(@RequestParam("filename") String fileName, @RequestParam("file") MultipartFile
+			receivedFile)
 			throws DocumentException, IOException {
 		logger.info("Received CREATE: " + fileName);
 		Document documentReceived = new Document();
@@ -62,7 +63,7 @@ public class DocumentController {
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	@ApiOperation(value = "Delete document", notes = "Delete document from database")
 	@ApiResponses(value = {@ApiResponse(code = StatusCodes.OK, message = "Document deleted")})
-	HttpStatus delete(@PathVariable("id") String id) {
+	public HttpStatus delete(@PathVariable("id") String id) {
 		logger.info("Received DELETE: " + id);
 		if (documentService.delete(id)) {
 			return HttpStatus.FOUND;
@@ -73,14 +74,14 @@ public class DocumentController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ApiOperation(value = "List all documents", notes = "Produces the full document list in database")
-	List<Document> findAll() {
+	public List<Document> findAll() {
 		logger.info("Received GET all documents");
 		return documentService.findAll();
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	@ApiOperation(value = "Find document by id", notes = "Use database document id")
-	Document findById(@PathVariable("id") String id) {
+	public Document findById(@PathVariable("id") String id) {
 		logger.info("Received GET id: " + id);
 		return documentService.findById(id).orElse(null);
 	}

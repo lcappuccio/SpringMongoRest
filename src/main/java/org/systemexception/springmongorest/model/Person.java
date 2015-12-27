@@ -18,9 +18,6 @@ public class Person {
 	private String id;
 	private String name, lastName;
 
-	public Person() {
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -33,26 +30,28 @@ public class Person {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
+		String finalName = name;
 		try {
-			verifyNullValue(name);
+			verifyNullValue(finalName);
 		} catch (PersonException e) {
-			name = "";
+			finalName = "";
 		}
-		this.name = checkStringLength(name);
+		this.name = checkStringLength(finalName);
 	}
 
 	public String getLastName() {
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
+	public void setLastName(final String lastName) {
+		String finalName = lastName;
 		try {
-			verifyNullValue(lastName);
+			verifyNullValue(finalName);
 		} catch (PersonException e) {
-			lastName = "";
+			finalName = "";
 		}
-		this.lastName = checkStringLength(lastName);
+		this.lastName = checkStringLength(finalName);
 	}
 
 	private String checkStringLength(final String stringToCheck) {
