@@ -18,9 +18,6 @@ public class Person {
 	private String id;
 	private String name, lastName;
 
-	public Person() {
-	}
-
 	public String getId() {
 		return id;
 	}
