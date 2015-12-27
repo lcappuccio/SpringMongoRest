@@ -62,7 +62,7 @@ public class PersonTest {
 		return name;
 	}
 
-	private void buildPerson(String name, String lastName) throws PersonException {
+	private void buildPerson(final String name, final String lastName) throws PersonException {
 		sut = new Person();
 		sut.setName(name);
 		sut.setLastName(lastName);
