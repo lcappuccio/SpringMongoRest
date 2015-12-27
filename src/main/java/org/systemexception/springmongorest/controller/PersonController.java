@@ -44,7 +44,7 @@ public class PersonController {
 	@ApiResponses(value = {
 			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields have validation errors"),
 			@ApiResponse(code = StatusCodes.CREATED, message = "Person created")})
-	Person create(@RequestBody @Valid Person person) {
+	public Person create(@RequestBody @Valid Person person) {
 		logger.info("Received CREATE: " + person.getName() + ", " + person.getLastName());
 		return personService.create(person);
 	}
@@ -54,21 +54,21 @@ public class PersonController {
 	@ApiResponses(value = {
 			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields are with validation errors"),
 			@ApiResponse(code = StatusCodes.OK, message = "Person deleted")})
-	void delete(@RequestBody @Valid Person person) {
+	public void delete(@RequestBody @Valid Person person) {
 		logger.info("Received DELETE: " + person.getName() + ", " + person.getLastName());
 		personService.delete(person);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "List all persons", notes = "Produces the full person list in database")
-	List<Person> findAll() {
+	public List<Person> findAll() {
 		logger.info("Received GET all persons");
 		return personService.findAll();
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	@ApiOperation(value = "Find person by id", notes = "Use internal database id")
-	Person findById(@PathVariable("id") String id) {
+	public Person findById(@PathVariable("id") String id) {
 		logger.info("Received GET id: " + id);
 		return personService.findById(id).orElse(null);
 	}
@@ -78,7 +78,7 @@ public class PersonController {
 	@ApiResponses(value = {
 			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields are with validation errors"),
 			@ApiResponse(code = StatusCodes.OK, message = "Person updated")})
-	Person update(@RequestBody @Valid Person person) {
+	public Person update(@RequestBody @Valid Person person) {
 		logger.info("Received UPDATE: " + person.getId() + ", " + person.getName() + ", " + person.getLastName());
 		return personService.update(person);
 	}

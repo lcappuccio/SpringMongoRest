@@ -24,9 +24,6 @@ public class Document {
 	private byte[] fileContents;
 	private long fileSize;
 
-	public Document() {
-	}
-
 	public String getId() {
 		return id;
 	}
