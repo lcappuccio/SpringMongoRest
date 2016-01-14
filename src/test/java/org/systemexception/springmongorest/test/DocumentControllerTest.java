@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.TestPropertySource;
@@ -82,15 +83,39 @@ public class DocumentControllerTest {
 		documentReceived.setFileContents(dataFile.getBytes());
 		documentReceived.setFileSize(dataFile.getSize());
 		when(documentService.create(any())).thenReturn(documentReceived);
-		sut.perform(MockMvcRequestBuilders.fileUpload(ENDPOINT).file(dataFile).param("filename", "filename.txt"));
+		sut.perform(MockMvcRequestBuilders.fileUpload(ENDPOINT).file(dataFile).param("filename", "filename.txt"))
+		.andExpect(status().is(HttpStatus.CREATED.value()));
 		verify(documentService).create(any());
 	}
 
 	@Test
-	public void delete_a_document() throws Exception {
-		String documentId = "1";
+	public void create_document_and_have_error() throws Exception {
+		MockMultipartFile dataFile = new MockMultipartFile("file", "filename.txt", "text/plain",
+				"some xml".getBytes());
+		Document documentReceived = new Document();
+		documentReceived.setFileName(dataFile.getName());
+		documentReceived.setFileContents("WRONG_CONTENT".getBytes());
+		documentReceived.setFileSize(dataFile.getSize());
+		when(documentService.create(any())).thenReturn(documentReceived);
+		sut.perform(MockMvcRequestBuilders.fileUpload(ENDPOINT).file(dataFile).param("filename", "filename.txt"))
+				.andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+		verify(documentService).create(any());
+	}
+
+	@Test
+	public void delete_existing_document() throws Exception {
+		String documentId = "EXISTS";
+		when(documentService.delete(documentId)).thenReturn(true);
 		sut.perform(MockMvcRequestBuilders.delete(ENDPOINT + documentId).content(document.getFileContents()))
-				.andExpect(status().is(StatusCodes.OK));
+				.andExpect(status().is(HttpStatus.FOUND.value()));
+		verify(documentService).delete(documentId);
+	}
+
+	@Test
+	public void delete_nonexisting_document() throws Exception {
+		String documentId = "NOT_EXISTS";
+		sut.perform(MockMvcRequestBuilders.delete(ENDPOINT + documentId).content(document.getFileContents()))
+				.andExpect(status().is(HttpStatus.NOT_FOUND.value()));
 		verify(documentService).delete(documentId);
 	}
 
