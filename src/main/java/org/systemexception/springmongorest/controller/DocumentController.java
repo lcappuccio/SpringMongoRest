@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.systemexception.springmongorest.constants.StatusCodes;
@@ -38,14 +39,13 @@ public class DocumentController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	@ApiOperation(value = "Create document", notes = "Adds a document to the database")
 	@ApiResponses(value = {
 			@ApiResponse(code = StatusCodes.BAD_REQUEST, message = "Fields have validation errors"),
 			@ApiResponse(code = StatusCodes.CREATED, message = "Document created")})
-	public HttpStatus create(@RequestParam("filename") String fileName, @RequestParam("file") MultipartFile
-			receivedFile)
+	public ResponseEntity<HttpStatus> create(@RequestParam("filename") String fileName,
+	                                         @RequestParam("file") MultipartFile receivedFile)
 			throws DocumentException, IOException {
 		logger.info("Received CREATE: " + fileName);
 		Document documentReceived = new Document();
@@ -54,21 +54,22 @@ public class DocumentController {
 		documentReceived.setFileSize(receivedFile.getSize());
 		Document documentCreated = documentService.create(documentReceived);
 		if (documentCreated.getFileContents().equals(documentReceived.getFileContents())) {
-			return HttpStatus.CREATED;
+			return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 		} else {
-			return HttpStatus.BAD_REQUEST;
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	@ApiOperation(value = "Delete document", notes = "Delete document from database")
-	@ApiResponses(value = {@ApiResponse(code = StatusCodes.OK, message = "Document deleted")})
-	public HttpStatus delete(@PathVariable("id") String id) {
+	@ApiResponses(value = {@ApiResponse(code = StatusCodes.FOUND, message = "Document deleted"),
+			@ApiResponse(code = StatusCodes.NOT_FOUND, message = "Document not deleted")})
+	public ResponseEntity<HttpStatus> delete(@PathVariable("id") String id) {
 		logger.info("Received DELETE: " + id);
 		if (documentService.delete(id)) {
-			return HttpStatus.FOUND;
+			return new ResponseEntity<HttpStatus>(HttpStatus.FOUND);
 		} else {
-			return HttpStatus.NOT_FOUND;
+			return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
 		}
 	}
 
