@@ -6,5 +6,5 @@ package org.systemexception.springmongorest.constants;
  */
 public class StatusCodes {
 
-	public static final int OK = 200, CREATED = 201, BAD_REQUEST = 400;
+	public static final int OK = 200, CREATED = 201, BAD_REQUEST = 400, NOT_FOUND = 404, FOUND = 302;
 }

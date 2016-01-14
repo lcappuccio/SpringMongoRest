@@ -71,20 +71,6 @@ public class Document {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		Document document = (Document) o;
-
-		if (fileSize != document.fileSize) return false;
-		if (id != null ? !id.equals(document.id) : document.id != null) return false;
-		if (fileName != null ? !fileName.equals(document.fileName) : document.fileName != null) return false;
-		return Arrays.equals(fileContents, document.fileContents);
-
-	}
-
-	@Override
 	public int hashCode() {
 		int result = id != null ? id.hashCode() : 0;
 		result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
