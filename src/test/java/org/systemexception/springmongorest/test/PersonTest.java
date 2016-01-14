@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.systemexception.springmongorest.exception.PersonException;
 import org.systemexception.springmongorest.model.Person;
 
+import java.util.UUID;
+
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -64,6 +66,7 @@ public class PersonTest {
 
 	private void buildPerson(final String name, final String lastName) throws PersonException {
 		sut = new Person();
+		sut.setId(UUID.randomUUID().toString());
 		sut.setName(name);
 		sut.setLastName(lastName);
 	}
