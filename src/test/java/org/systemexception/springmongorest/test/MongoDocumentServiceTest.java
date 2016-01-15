@@ -7,8 +7,12 @@ import org.systemexception.springmongorest.model.Document;
 import org.systemexception.springmongorest.repository.DocumentRepository;
 import org.systemexception.springmongorest.service.MongoDocumentService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -22,6 +26,7 @@ public class MongoDocumentServiceTest {
 	private DocumentRepository documentRepository;
 	private Document document;
 	private List<Document> documentList = new ArrayList<>();
+	private final String nonExistingId = "NON_EXISTING_ID";
 
 	@Before
 	public void setUp() throws DocumentException {
@@ -34,6 +39,7 @@ public class MongoDocumentServiceTest {
 		when(documentRepository.save(document)).thenReturn(document);
 		when(documentRepository.findAll()).thenReturn(documentList);
 		when(documentRepository.findOne(document.getId())).thenReturn(Optional.of(document));
+		when(documentRepository.findOne(nonExistingId)).thenReturn(Optional.empty());
 	}
 
 	@Test
@@ -41,16 +47,25 @@ public class MongoDocumentServiceTest {
 		sut = new MongoDocumentService(documentRepository);
 		Document newDocument = sut.create(document);
 
-		assertTrue(newDocument.equals(document));
 		verify(documentRepository).save(document);
+		assertTrue(newDocument.equals(document));
 	}
 
 	@Test
 	public void delete_document() {
 		sut = new MongoDocumentService(documentRepository);
-		sut.delete(document.getId());
 
+		assertTrue(sut.delete(document.getId()));
+		verify(documentRepository).findOne(document.getId());
 		verify(documentRepository).delete(document);
+	}
+
+	@Test
+	public void delete_nonexisting_document() {
+		sut = new MongoDocumentService(documentRepository);
+
+		assertFalse(sut.delete(nonExistingId));
+		verify(documentRepository).findOne(nonExistingId);
 	}
 
 	@Test

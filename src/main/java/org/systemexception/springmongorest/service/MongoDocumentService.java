@@ -34,9 +34,9 @@ public class MongoDocumentService implements DocumentService {
 
 	@Override
 	public Boolean delete(String id) {
-		Document document = documentRepository.findOne(id).get();
-		if (!document.getId().isEmpty()) {
-			documentRepository.delete(document);
+		Optional<Document> document = documentRepository.findOne(id);
+		if (document.isPresent()) {
+			documentRepository.delete(document.get());
 			return true;
 		} else {
 			return false;
