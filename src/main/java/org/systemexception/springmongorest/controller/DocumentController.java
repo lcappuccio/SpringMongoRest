@@ -18,6 +18,7 @@ import org.systemexception.springmongorest.service.DocumentService;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -53,10 +54,10 @@ public class DocumentController {
 		documentReceived.setFileContents(receivedFile.getBytes());
 		documentReceived.setFileSize(receivedFile.getSize());
 		Document documentCreated = documentService.create(documentReceived);
-		if (documentCreated.getFileContents().equals(documentReceived.getFileContents())) {
-			return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
+		if (Arrays.equals(documentCreated.getFileContents(), documentReceived.getFileContents())) {
+			return new ResponseEntity<>(HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -67,9 +68,9 @@ public class DocumentController {
 	public ResponseEntity<HttpStatus> delete(@PathVariable("id") String id) {
 		logger.info("Received DELETE: " + id);
 		if (documentService.delete(id)) {
-			return new ResponseEntity<HttpStatus>(HttpStatus.FOUND);
+			return new ResponseEntity<>(HttpStatus.FOUND);
 		} else {
-			return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
