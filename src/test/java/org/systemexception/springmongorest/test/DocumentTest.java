@@ -31,7 +31,7 @@ public class DocumentTest {
 		fileOutputStream.close();
 		// Create regular file
 		fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + File.separator + "regular_file.bin");
-		regularFile = new byte[1 * Document.MAX_SIZE_BYTES];
+		regularFile = new byte[Document.MAX_SIZE_BYTES];
 		fileOutputStream.write(regularFile);
 		fileOutputStream.flush();
 		fileOutputStream.close();
