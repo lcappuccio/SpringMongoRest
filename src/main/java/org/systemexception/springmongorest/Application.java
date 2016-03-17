@@ -26,7 +26,6 @@ public class Application extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		application.showBanner(false);
 		application.profiles("production");
 		return application.sources(Application.class);
 	}
@@ -34,7 +33,6 @@ public class Application extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 
 		SpringApplication app = new SpringApplication(Application.class);
-		app.setShowBanner(false);
 		app.run(args);
 	}
 
