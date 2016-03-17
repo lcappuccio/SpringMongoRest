@@ -84,7 +84,7 @@ public class DocumentControllerTest {
 		documentReceived.setFileSize(dataFile.getSize());
 		when(documentService.create(any())).thenReturn(documentReceived);
 		sut.perform(MockMvcRequestBuilders.fileUpload(ENDPOINT).file(dataFile).param("filename", "filename.txt"))
-		.andExpect(status().is(HttpStatus.CREATED.value()));
+				.andExpect(status().is(HttpStatus.CREATED.value()));
 		verify(documentService).create(any());
 	}
 

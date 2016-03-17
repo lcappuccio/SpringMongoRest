@@ -65,8 +65,7 @@ public class PersonControllerTest {
 		personService.create(person);
 		when(personService.findById(any())).thenReturn(Optional.of(person));
 		sut.perform(MockMvcRequestBuilders.get(ENDPOINT + person.getId()).accept(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect
-				(status().is(StatusCodes.OK));
+				.andExpect(status().is(StatusCodes.OK));
 		verify(personService).findById(any());
 	}
 
@@ -99,8 +98,7 @@ public class PersonControllerTest {
 	}
 
 	private String personJson(Person person) {
-		return "{\"name\":" + "\"" + person.getName() + "\"," +
-				"\"lastName\":"+ "\"" + person.getLastName() + "\"}";
+		return "{\"name\":" + "\"" + person.getName() + "\"," + "\"lastName\":" + "\"" + person.getLastName() + "\"}";
 	}
 
 	private String badlyFormattedPerson() {

@@ -55,7 +55,7 @@ public class Person {
 	}
 
 	private String checkStringLength(final String stringToCheck) {
-		String stringValidated = "";
+		String stringValidated;
 		if (stringToCheck.length() > MAX_LENGTH) {
 			stringValidated = stringToCheck.substring(0, MAX_LENGTH);
 			logger.info("Name " + stringToCheck + " truncated to: " + stringValidated);
