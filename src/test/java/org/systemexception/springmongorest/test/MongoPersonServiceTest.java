@@ -23,7 +23,7 @@ public class MongoPersonServiceTest {
 	private MongoPersonService sut;
 	private PersonRepository personRepository;
 	private Person person;
-	private List<Person> personList = new ArrayList<>();
+	private final List<Person> personList = new ArrayList<>();
 
 	@Before
 	public void setUp() {

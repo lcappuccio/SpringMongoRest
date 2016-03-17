@@ -25,7 +25,7 @@ public class MongoDocumentServiceTest {
 	private MongoDocumentService sut;
 	private DocumentRepository documentRepository;
 	private Document document;
-	private List<Document> documentList = new ArrayList<>();
+	private final List<Document> documentList = new ArrayList<>();
 	private final String nonExistingId = "NON_EXISTING_ID";
 
 	@Before

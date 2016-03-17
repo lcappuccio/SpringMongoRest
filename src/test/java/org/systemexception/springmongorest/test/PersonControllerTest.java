@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PersonControllerTest {
 
 	private PersonService personService;
-	private Person person = new Person();
+	private final Person person = new Person();
 	@InjectMocks
 	@Autowired
 	private PersonController personController;

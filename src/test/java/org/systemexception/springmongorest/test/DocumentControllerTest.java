@@ -40,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DocumentControllerTest {
 
 	private DocumentService documentService;
-	private Document document = new Document();
+	private final Document document = new Document();
 	@InjectMocks
 	@Autowired
 	private DocumentController documentController;
