@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -14,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.systemexception.springmongorest.Application;
-import org.systemexception.springmongorest.constants.StatusCodes;
 import org.systemexception.springmongorest.controller.PersonController;
 import org.systemexception.springmongorest.model.Person;
 import org.systemexception.springmongorest.service.MongoPersonService;
@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PersonControllerTest {
 
 	private PersonService personService;
-	private Person person = new Person();
+	private final Person person = new Person();
 	@InjectMocks
 	@Autowired
 	private PersonController personController;
@@ -56,7 +56,7 @@ public class PersonControllerTest {
 	@Test
 	public void find_all_persons() throws Exception {
 		sut.perform(MockMvcRequestBuilders.get(ENDPOINT).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status()
-				.is(StatusCodes.OK));
+				.is(HttpStatus.OK.value()));
 		verify(personService).findAll();
 	}
 
@@ -65,42 +65,49 @@ public class PersonControllerTest {
 		personService.create(person);
 		when(personService.findById(any())).thenReturn(Optional.of(person));
 		sut.perform(MockMvcRequestBuilders.get(ENDPOINT + person.getId()).accept(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect
-				(status().is(StatusCodes.OK));
+				.andExpect(status().is(HttpStatus.FOUND.value()));
+		verify(personService).findById(any());
+	}
+
+	@Test
+	public void dont_find_one_person() throws Exception {
+		personService.create(person);
+		when(personService.findById(any())).thenReturn(Optional.empty());
+		sut.perform(MockMvcRequestBuilders.get(ENDPOINT + person.getId()).accept(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().is(HttpStatus.NOT_FOUND.value()));
 		verify(personService).findById(any());
 	}
 
 	@Test
 	public void create_person() throws Exception {
 		sut.perform(MockMvcRequestBuilders.post(ENDPOINT).contentType(MediaType.APPLICATION_JSON_VALUE).content
-				(personJson(person).getBytes())).andExpect(status().is(StatusCodes.CREATED));
+				(personJson(person).getBytes())).andExpect(status().is(HttpStatus.CREATED.value()));
 		verify(personService).create(person);
 	}
 
 	@Test
 	public void refuse_create_bad_person() throws Exception {
 		sut.perform(MockMvcRequestBuilders.post(ENDPOINT).contentType(MediaType.APPLICATION_JSON_VALUE).content
-				(badlyFormattedPerson().getBytes())).andExpect(status().is(StatusCodes.BAD_REQUEST));
+				(badlyFormattedPerson().getBytes())).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
 		verify(personService, never()).create(person);
 	}
 
 	@Test
 	public void delete_person() throws Exception {
 		sut.perform(MockMvcRequestBuilders.delete(ENDPOINT).contentType(MediaType.APPLICATION_JSON_VALUE).content
-				(personJson(person).getBytes())).andExpect(status().is(StatusCodes.OK));
+				(personJson(person).getBytes())).andExpect(status().is(HttpStatus.OK.value()));
 		verify(personService).delete(person);
 	}
 
 	@Test
 	public void update_person() throws Exception {
 		sut.perform(MockMvcRequestBuilders.put(ENDPOINT).contentType(MediaType.APPLICATION_JSON_VALUE).content
-				(personJson(person).getBytes())).andExpect(status().is(StatusCodes.OK));
+				(personJson(person).getBytes())).andExpect(status().is(HttpStatus.OK.value()));
 		verify(personService).update(person);
 	}
 
 	private String personJson(Person person) {
-		return "{\"name\":" + "\"" + person.getName() + "\"," +
-				"\"lastName\":"+ "\"" + person.getLastName() + "\"}";
+		return "{\"name\":" + "\"" + person.getName() + "\"," + "\"lastName\":" + "\"" + person.getLastName() + "\"}";
 	}
 
 	private String badlyFormattedPerson() {

@@ -20,7 +20,6 @@ public interface PersonService {
 	Person create(Person person);
 
 	/**
-	 *
 	 * @param person
 	 * @return
 	 */

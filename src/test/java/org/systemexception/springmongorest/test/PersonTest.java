@@ -64,7 +64,7 @@ public class PersonTest {
 		return name;
 	}
 
-	private void buildPerson(final String name, final String lastName) throws PersonException {
+	private void buildPerson(final String name, final String lastName) {
 		sut = new Person();
 		sut.setId(UUID.randomUUID().toString());
 		sut.setName(name);
