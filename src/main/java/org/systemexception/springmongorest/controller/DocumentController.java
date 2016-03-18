@@ -1,6 +1,5 @@
 package org.systemexception.springmongorest.controller;
 
-import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.systemexception.springmongorest.constants.Endpoints;
 import org.systemexception.springmongorest.exception.DocumentException;
 import org.systemexception.springmongorest.model.Document;
 import org.systemexception.springmongorest.service.DocumentService;
@@ -23,8 +23,7 @@ import java.util.List;
  */
 @EnableSwagger2
 @RestController
-@RequestMapping(value = "/api/document")
-@Api(basePath = "/api/document", value = "Document", description = "Documents REST API")
+@RequestMapping(value = Endpoints.DOCUMENT)
 public class DocumentController {
 
 	private final static Logger logger = LoggerFactory.getLogger(DocumentController.class);
@@ -52,7 +51,7 @@ public class DocumentController {
 		}
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = Endpoints.ID, method = RequestMethod.DELETE)
 	public ResponseEntity<HttpStatus> delete(@PathVariable("id") String id) {
 		logger.info("Received DELETE: " + id);
 		if (documentService.delete(id)) {
@@ -68,7 +67,7 @@ public class DocumentController {
 		return documentService.findAll();
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@RequestMapping(value = Endpoints.ID, method = RequestMethod.GET)
 	public Document findById(@PathVariable("id") String id) {
 		logger.info("Received GET id: " + id);
 		return documentService.findById(id).orElse(null);
