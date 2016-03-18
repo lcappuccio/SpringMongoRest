@@ -74,6 +74,15 @@ public class DocumentControllerTest {
 	}
 
 	@Test
+	public void dont_find_one_document() throws Exception {
+		documentService.create(document);
+		when(documentService.findById(any())).thenReturn(Optional.empty());
+		sut.perform(MockMvcRequestBuilders.get(ENDPOINT + document.getId()).accept(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().is(HttpStatus.NOT_FOUND.value()));
+		verify(documentService).findById(any());
+	}
+
+	@Test
 	public void create_document() throws Exception {
 		MockMultipartFile dataFile = new MockMultipartFile("file", "filename.txt", "text/plain",
 				"some xml".getBytes());

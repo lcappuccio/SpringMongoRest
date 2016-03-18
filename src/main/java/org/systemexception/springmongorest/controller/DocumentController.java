@@ -72,6 +72,10 @@ public class DocumentController {
 	public ResponseEntity<Document> findById(@PathVariable("id") String id) {
 		logger.info("Received GET id: " + id);
 		Document document = documentService.findById(id).orElse(null);
-		return new ResponseEntity<>(document, HttpStatus.OK);
+		if (document != null) {
+			return new ResponseEntity<>(document, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(document, HttpStatus.NOT_FOUND);
+		}
 	}
 }
