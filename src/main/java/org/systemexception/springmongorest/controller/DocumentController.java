@@ -35,8 +35,8 @@ public class DocumentController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<HttpStatus> create(@RequestParam("filename") String fileName,
-	                                         @RequestParam("file") MultipartFile receivedFile)
+	public ResponseEntity<Document> create(@RequestParam("filename") String fileName,
+	                                       @RequestParam("file") MultipartFile receivedFile)
 			throws DocumentException, IOException {
 		logger.info("Received CREATE: " + fileName);
 		Document documentReceived = new Document();
@@ -45,9 +45,9 @@ public class DocumentController {
 		documentReceived.setFileSize(receivedFile.getSize());
 		Document documentCreated = documentService.create(documentReceived);
 		if (Arrays.equals(documentCreated.getFileContents(), documentReceived.getFileContents())) {
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			return new ResponseEntity<>(documentCreated, HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(documentReceived, HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -62,14 +62,16 @@ public class DocumentController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Document> findAll() {
+	public ResponseEntity<List<Document>> findAll() {
 		logger.info("Received GET all documents");
-		return documentService.findAll();
+		List<Document> documentList = documentService.findAll();
+		return new ResponseEntity<>(documentList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = Endpoints.ID, method = RequestMethod.GET)
-	public Document findById(@PathVariable("id") String id) {
+	public ResponseEntity<Document> findById(@PathVariable("id") String id) {
 		logger.info("Received GET id: " + id);
-		return documentService.findById(id).orElse(null);
+		Document document = documentService.findById(id).orElse(null);
+		return new ResponseEntity<>(document, HttpStatus.OK);
 	}
 }
