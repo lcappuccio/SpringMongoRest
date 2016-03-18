@@ -69,6 +69,7 @@ public class PersonControllerTest {
 		verify(personService).findById(any());
 	}
 
+	@Test
 	public void dont_find_one_person() throws Exception {
 		personService.create(person);
 		when(personService.findById(any())).thenReturn(Optional.empty());
