@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.systemexception.springmongorest.Application;
-import org.systemexception.springmongorest.constants.StatusCodes;
 import org.systemexception.springmongorest.controller.DocumentController;
 import org.systemexception.springmongorest.exception.DocumentException;
 import org.systemexception.springmongorest.model.Document;
@@ -61,7 +60,7 @@ public class DocumentControllerTest {
 	@Test
 	public void find_all_documents() throws Exception {
 		sut.perform(MockMvcRequestBuilders.get(ENDPOINT).content(document.getFileContents())).andExpect(status()
-				.is(StatusCodes.OK));
+				.is(HttpStatus.OK.value()));
 		verify(documentService).findAll();
 	}
 
@@ -70,7 +69,16 @@ public class DocumentControllerTest {
 		documentService.create(document);
 		when(documentService.findById(any())).thenReturn(Optional.of(document));
 		sut.perform(MockMvcRequestBuilders.get(ENDPOINT + document.getId()).accept(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(status().is(StatusCodes.OK));
+				.andExpect(status().is(HttpStatus.OK.value()));
+		verify(documentService).findById(any());
+	}
+
+	@Test
+	public void dont_find_one_document() throws Exception {
+		documentService.create(document);
+		when(documentService.findById(any())).thenReturn(Optional.empty());
+		sut.perform(MockMvcRequestBuilders.get(ENDPOINT + document.getId()).accept(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().is(HttpStatus.NOT_FOUND.value()));
 		verify(documentService).findById(any());
 	}
 

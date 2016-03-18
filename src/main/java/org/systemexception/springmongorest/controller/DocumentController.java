@@ -1,6 +1,5 @@
 package org.systemexception.springmongorest.controller;
 
-import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.systemexception.springmongorest.constants.Endpoints;
 import org.systemexception.springmongorest.exception.DocumentException;
 import org.systemexception.springmongorest.model.Document;
 import org.systemexception.springmongorest.service.DocumentService;
@@ -23,8 +23,7 @@ import java.util.List;
  */
 @EnableSwagger2
 @RestController
-@RequestMapping(value = "/api/document")
-@Api(basePath = "/api/document", value = "Document", description = "Documents REST API")
+@RequestMapping(value = Endpoints.DOCUMENT)
 public class DocumentController {
 
 	private final static Logger logger = LoggerFactory.getLogger(DocumentController.class);
@@ -36,8 +35,8 @@ public class DocumentController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<HttpStatus> create(@RequestParam("filename") String fileName,
-	                                         @RequestParam("file") MultipartFile receivedFile)
+	public ResponseEntity<Document> create(@RequestParam("filename") String fileName,
+	                                       @RequestParam("file") MultipartFile receivedFile)
 			throws DocumentException, IOException {
 		logger.info("Received CREATE: " + fileName);
 		Document documentReceived = new Document();
@@ -46,13 +45,13 @@ public class DocumentController {
 		documentReceived.setFileSize(receivedFile.getSize());
 		Document documentCreated = documentService.create(documentReceived);
 		if (Arrays.equals(documentCreated.getFileContents(), documentReceived.getFileContents())) {
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			return new ResponseEntity<>(documentCreated, HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(documentReceived, HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = Endpoints.ID, method = RequestMethod.DELETE)
 	public ResponseEntity<HttpStatus> delete(@PathVariable("id") String id) {
 		logger.info("Received DELETE: " + id);
 		if (documentService.delete(id)) {
@@ -63,14 +62,20 @@ public class DocumentController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Document> findAll() {
+	public ResponseEntity<List<Document>> findAll() {
 		logger.info("Received GET all documents");
-		return documentService.findAll();
+		List<Document> documentList = documentService.findAll();
+		return new ResponseEntity<>(documentList, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public Document findById(@PathVariable("id") String id) {
+	@RequestMapping(value = Endpoints.ID, method = RequestMethod.GET)
+	public ResponseEntity<Document> findById(@PathVariable("id") String id) {
 		logger.info("Received GET id: " + id);
-		return documentService.findById(id).orElse(null);
+		Document document = documentService.findById(id).orElse(null);
+		if (document != null) {
+			return new ResponseEntity<>(document, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(document, HttpStatus.NOT_FOUND);
+		}
 	}
 }
