@@ -24,13 +24,14 @@ public class DocumentTest {
 	public static void setUp() throws IOException {
 		// Create large file
 		FileOutputStream fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + File.separator +
-				"large_file.bin");
+				"target" + File.separator + "large_file.bin");
 		bigFile = new byte[2 * Document.MAX_SIZE_BYTES];
 		fileOutputStream.write(bigFile);
 		fileOutputStream.flush();
 		fileOutputStream.close();
 		// Create regular file
-		fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + File.separator + "regular_file.bin");
+		fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + File.separator +
+				"target" + File.separator + "regular_file.bin");
 		regularFile = new byte[Document.MAX_SIZE_BYTES];
 		fileOutputStream.write(regularFile);
 		fileOutputStream.flush();
