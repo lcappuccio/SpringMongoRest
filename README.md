@@ -18,6 +18,12 @@ REST api with SpringBoot and MondoDb. SpringBoot Actuator is enabled.
 
 # Usage
 
+## Configure
+
+Set ```application.properties``` parameter ```spring.data.mongodb.host=``` with the correct ip or hostname
+
+## Launch
+
 ```java -jar spring-mongo-rest-VERSION.war```
 
 # Documentation
