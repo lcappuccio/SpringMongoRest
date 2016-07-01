@@ -21,7 +21,6 @@ public interface PersonService {
 
 	/**
 	 * @param person
-	 * @return
 	 */
 	void delete(Person person);
 

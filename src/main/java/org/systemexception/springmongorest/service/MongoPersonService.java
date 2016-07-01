@@ -39,7 +39,6 @@ public class MongoPersonService implements PersonService {
 
 	/**
 	 * @param person
-	 * @return
 	 */
 	@Override
 	public void delete(Person person) {
