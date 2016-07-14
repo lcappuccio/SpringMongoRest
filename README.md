@@ -6,6 +6,7 @@ REST api with SpringBoot and MondoDb. SpringBoot Actuator is enabled.
 [![Build Status](https://travis-ci.org/lcappuccio/spring-mongo-rest.svg?branch=master)](https://travis-ci.org/lcappuccio/spring-mongo-rest)
 [![codecov.io](https://codecov.io/github/lcappuccio/spring-mongo-rest/coverage.svg?branch=master)](https://codecov.io/github/lcappuccio/spring-mongo-rest?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/512279e3a7624f3ca174bb59bee103f5)](https://www.codacy.com/app/leo_4/spring-mongo-rest)
+[![codebeat badge](https://codebeat.co/badges/a90e1af0-d3a1-4bfc-845b-5a876fd2b3f9)](https://codebeat.co/projects/github-com-lcappuccio-spring-mongo-rest)
 
 **Develop**
 
