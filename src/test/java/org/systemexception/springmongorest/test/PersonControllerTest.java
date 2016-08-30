@@ -3,14 +3,13 @@ package org.systemexception.springmongorest.test;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,14 +28,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author leo
  * @date 21/09/15 14:50
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {Application.class})
-@WebAppConfiguration
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {Application.class})
+@TestPropertySource(locations = "classpath:application.properties")
 public class PersonControllerTest {
 
+	@MockBean
 	private PersonService personService;
 	private final Person person = new Person();
-	@InjectMocks
 	@Autowired
 	private PersonController personController;
 	private MockMvc sut;
@@ -49,7 +48,6 @@ public class PersonControllerTest {
 		personService = mock(MongoPersonService.class);
 		when(personService.findAll()).thenReturn(null);
 		personController = new PersonController(personService);
-		MockitoAnnotations.initMocks(this);
 		sut = MockMvcBuilders.standaloneSetup(personController).build();
 	}
 
