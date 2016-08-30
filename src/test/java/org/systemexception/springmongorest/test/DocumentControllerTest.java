@@ -3,10 +3,9 @@ package org.systemexception.springmongorest.test;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
@@ -36,9 +35,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(locations = "classpath:application.properties")
 public class DocumentControllerTest {
 
+	@MockBean
 	private DocumentService documentService;
 	private final Document document = new Document();
-	@InjectMocks
 	@Autowired
 	private DocumentController documentController;
 	private MockMvc sut;
@@ -51,7 +50,6 @@ public class DocumentControllerTest {
 		documentService = mock(MongoDocumentService.class);
 		when(documentService.findAll()).thenReturn(null);
 		documentController = new DocumentController(documentService);
-		MockitoAnnotations.initMocks(this);
 		sut = MockMvcBuilders.standaloneSetup(documentController).build();
 	}
 
