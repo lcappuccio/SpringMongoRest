@@ -86,7 +86,7 @@ public class PersonControllerTest {
 	@Test
 	public void refuse_create_bad_person() throws Exception {
 		sut.perform(MockMvcRequestBuilders.post(ENDPOINT).contentType(MediaType.APPLICATION_JSON_VALUE).content
-				(badlyFormattedPerson().getBytes())).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+				("badly_formatted_data".getBytes())).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
 		verify(personService, never()).create(person);
 	}
 
@@ -106,10 +106,6 @@ public class PersonControllerTest {
 
 	private String personJson(Person person) {
 		return "{\"name\":" + "\"" + person.getName() + "\"," + "\"lastName\":" + "\"" + person.getLastName() + "\"}";
-	}
-
-	private String badlyFormattedPerson() {
-		return "badly_formatted_data";
 	}
 
 }
