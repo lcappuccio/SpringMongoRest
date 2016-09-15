@@ -15,7 +15,8 @@ import java.util.Arrays;
 public class Document {
 
 	private final static Logger logger = LoggerFactory.getLogger(Document.class);
-	public static final int MAX_SIZE_BYTES = 4000000, FILENAME_LENGTH = 255;
+	public static final int MAX_SIZE_BYTES = 4000000;
+	private static final int FILENAME_LENGTH = 255;
 
 	@Id
 	private String id;
