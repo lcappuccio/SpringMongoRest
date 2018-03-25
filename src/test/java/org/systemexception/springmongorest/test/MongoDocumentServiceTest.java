@@ -38,8 +38,8 @@ public class MongoDocumentServiceTest {
 		documentRepository = mock(DocumentRepository.class);
 		when(documentRepository.save(document)).thenReturn(document);
 		when(documentRepository.findAll()).thenReturn(documentList);
-		when(documentRepository.findOne(document.getId())).thenReturn(Optional.of(document));
-		when(documentRepository.findOne(nonExistingId)).thenReturn(Optional.empty());
+		when(documentRepository.findById(document.getId())).thenReturn(Optional.of(document));
+		when(documentRepository.findById(nonExistingId)).thenReturn(Optional.empty());
 	}
 
 	@Test
@@ -56,7 +56,7 @@ public class MongoDocumentServiceTest {
 		sut = new MongoDocumentService(documentRepository);
 
 		assertTrue(sut.delete(document.getId()));
-		verify(documentRepository).findOne(document.getId());
+		verify(documentRepository).findById(document.getId());
 		verify(documentRepository).delete(document);
 	}
 
@@ -65,7 +65,7 @@ public class MongoDocumentServiceTest {
 		sut = new MongoDocumentService(documentRepository);
 
 		assertFalse(sut.delete(nonExistingId));
-		verify(documentRepository).findOne(nonExistingId);
+		verify(documentRepository).findById(nonExistingId);
 	}
 
 	@Test
@@ -84,7 +84,7 @@ public class MongoDocumentServiceTest {
 
 		assertTrue(Objects.equals(foundDocument.get(), document));
 		assertTrue(Objects.equals(foundDocument.get().hashCode(), document.hashCode()));
-		verify(documentRepository).findOne(document.getId());
+		verify(documentRepository).findById(document.getId());
 	}
 
 }

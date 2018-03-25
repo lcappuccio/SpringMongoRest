@@ -33,5 +33,5 @@ public interface DocumentRepository extends Repository<Document, String> {
 	 * @param id
 	 * @return
 	 */
-	Optional<Document> findOne(String id);
+	Optional<Document> findById(String id);
 }

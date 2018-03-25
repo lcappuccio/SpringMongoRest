@@ -63,7 +63,7 @@ public class MongoPersonService implements PersonService {
 	@Override
 	public Optional<Person> findById(String id) {
 		logger.info("Finding id: " + id);
-		return personRepository.findOne(id);
+		return personRepository.findById(id);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class MongoPersonService implements PersonService {
 	 */
 	@Override
 	public Person update(Person person) {
-		Person foundPerson = personRepository.findOne(person.getId()).get();
+		Person foundPerson = personRepository.findById(person.getId()).get();
 		logger.info("Update id: " + person.getId());
 		foundPerson.setName(person.getName());
 		foundPerson.setLastName(person.getLastName());

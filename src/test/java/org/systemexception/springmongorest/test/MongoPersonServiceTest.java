@@ -34,7 +34,7 @@ public class MongoPersonServiceTest {
 		personRepository = mock(PersonRepository.class);
 		when(personRepository.save(person)).thenReturn(person);
 		when(personRepository.findAll()).thenReturn(personList);
-		when(personRepository.findOne(person.getId())).thenReturn(Optional.of(person));
+		when(personRepository.findById(person.getId())).thenReturn(Optional.of(person));
 	}
 
 	@Test
@@ -69,7 +69,7 @@ public class MongoPersonServiceTest {
 		Optional<Person> foundPerson = sut.findById(person.getId());
 
 		assertTrue(Objects.equals(foundPerson.get().getId(), person.getId()));
-		verify(personRepository).findOne(person.getId());
+		verify(personRepository).findById(person.getId());
 	}
 
 	@Test

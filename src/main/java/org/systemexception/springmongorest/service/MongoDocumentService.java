@@ -34,7 +34,7 @@ public class MongoDocumentService implements DocumentService {
 
 	@Override
 	public Boolean delete(String id) {
-		Optional<Document> document = documentRepository.findOne(id);
+		Optional<Document> document = documentRepository.findById(id);
 		if (document.isPresent()) {
 			documentRepository.delete(document.get());
 			return true;
@@ -51,6 +51,6 @@ public class MongoDocumentService implements DocumentService {
 	@Override
 	public Optional<Document> findById(String id) {
 		logger.info("Finding id: " + id);
-		return documentRepository.findOne(id);
+		return documentRepository.findById(id);
 	}
 }

@@ -33,6 +33,6 @@ public interface PersonRepository extends Repository<Person, String> {
 	 * @param id
 	 * @return
 	 */
-	Optional<Person> findOne(String id);
+	Optional<Person> findById(String id);
 
 }
