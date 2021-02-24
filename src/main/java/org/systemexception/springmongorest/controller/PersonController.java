@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.systemexception.springmongorest.constants.Endpoints;
 import org.systemexception.springmongorest.model.Person;
 import org.systemexception.springmongorest.service.PersonService;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -34,14 +34,14 @@ public class PersonController {
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType
 			.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Person> create(@RequestBody @Valid Person person) {
+	public ResponseEntity<Person> create(@RequestBody @Validated Person person) {
 		logger.info("Received CREATE: " + person.getName() + ", " + person.getLastName());
 		Person personCreated = personService.create(person);
 		return new ResponseEntity<>(personCreated, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> delete(@RequestBody @Valid Person person) {
+	public ResponseEntity<HttpStatus> delete(@RequestBody @Validated Person person) {
 		logger.info("Received DELETE: " + person.getName() + ", " + person.getLastName());
 		personService.delete(person);
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -67,7 +67,7 @@ public class PersonController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Person> update(@RequestBody @Valid Person person) {
+	public ResponseEntity<Person> update(@RequestBody @Validated Person person) {
 		logger.info("Received UPDATE: " + person.getId() + ", " + person.getName() + ", " + person.getLastName());
 		Person updatedPerson = personService.update(person);
 		return new ResponseEntity<>(updatedPerson, HttpStatus.OK);
